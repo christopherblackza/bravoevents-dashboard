@@ -1,0 +1,95 @@
+<div class="services-management-container">
+  <!-- Header -->
+  <mat-toolbar class="page-header">
+    <span class="page-title">Services Management</span>
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary" (click)="addService()">
+      <mat-icon>add</mat-icon>
+      Add Service
+    </button>
+  </mat-toolbar>
+
+  <!-- Services Table -->
+  <mat-card class="services-card">
+    <mat-card-header>
+      <mat-card-title>Services</mat-card-title>
+      <mat-card-subtitle>Manage your event services and categories</mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="table-container" *ngIf="!loading">
+        <table mat-table [dataSource]="services" class="services-table">
+          <!-- Service Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Service Name</th>
+            <td mat-cell *matCellDef="let service">
+              <div class="service-info">
+                <mat-icon class="service-icon">business_center</mat-icon>
+                <div class="service-details">
+                  <div class="service-name">{{ service.name }}</div>
+                  <div class="service-type">{{ service.type }}</div>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Type Column -->
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef>Type</th>
+            <td mat-cell *matCellDef="let service">
+              <mat-chip selected color="primary">
+                {{ service.type }}
+              </mat-chip>
+            </td>
+          </ng-container>
+
+          <!-- Sub Categories Count Column -->
+          <ng-container matColumnDef="subCategoriesCount">
+            <th mat-header-cell *matHeaderCellDef>Sub Categories</th>
+            <td mat-cell *matCellDef="let service">
+              <div class="subcategories-info">
+                <mat-icon>category</mat-icon>
+                <span>{{ getSubCategoriesText(service) }}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let service">
+              <div class="action-buttons">
+                <button mat-icon-button color="primary" (click)="editService(service)" matTooltip="Edit Service">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteService(service)" matTooltip="Delete Service">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <!-- Empty State -->
+        <div *ngIf="services.length === 0" class="empty-state">
+          <mat-icon class="empty-icon">business_center</mat-icon>
+          <h3>No Services Found</h3>
+          <p>Start by adding your first service to manage event categories.</p>
+          <button mat-raised-button color="primary" (click)="addService()">
+            <mat-icon>add</mat-icon>
+            Add First Service
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner></mat-spinner>
+        <p>Loading services...</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

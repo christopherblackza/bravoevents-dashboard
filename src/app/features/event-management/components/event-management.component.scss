@@ -1,0 +1,109 @@
+.event-management-container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  .header-card {
+    margin-bottom: 24px;
+    
+    mat-card-header {
+      margin-bottom: 16px;
+    }
+  }
+
+  .table-card {
+    .table-container {
+      overflow-x: auto;
+      
+      .events-table {
+        width: 100%;
+        min-width: 800px;
+
+        .event-logo-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+          .event-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid #e0e0e0;
+          }
+        }
+
+        .event-title-container {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          
+          .event-title {
+            font-weight: 500;
+            font-size: 14px;
+          }
+          
+          .status-chip {
+            font-size: 11px;
+            height: 20px;
+            line-height: 20px;
+            align-self: flex-start;
+          }
+        }
+
+        .action-buttons {
+          display: flex;
+          gap: 8px;
+          
+          button {
+            min-width: 40px;
+            width: 40px;
+            height: 40px;
+          }
+        }
+
+        th {
+          font-weight: 600;
+          color: rgba(0, 0, 0, 0.87);
+        }
+
+        td {
+          padding: 12px 8px;
+        }
+      }
+
+      .no-data {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 48px 24px;
+        text-align: center;
+        color: rgba(0, 0, 0, 0.54);
+
+        mat-icon {
+          font-size: 48px;
+          width: 48px;
+          height: 48px;
+          margin-bottom: 16px;
+          opacity: 0.5;
+        }
+
+        p {
+          margin: 0;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .event-management-container {
+    padding: 16px;
+    
+    .table-card .table-container .events-table {
+      min-width: 600px;
+    }
+  }
+}

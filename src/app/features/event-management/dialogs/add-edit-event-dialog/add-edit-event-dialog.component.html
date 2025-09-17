@@ -1,0 +1,363 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title>{{ isEdit ? 'Edit Event' : 'Add New Event' }}</h2>
+  
+  <mat-dialog-content class="dialog-content">
+    <form [formGroup]="eventForm" class="event-form">
+      <mat-tab-group animationDuration="0ms" class="form-tabs">
+        
+        <!-- Basic Information Tab -->
+        <mat-tab label="Basic Info">
+          <div class="tab-content">
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Event Title</mat-label>
+                <input matInput formControlName="title" placeholder="Enter event title">
+                <mat-error *ngIf="eventForm.get('title')?.hasError('required')">
+                  Title is required
+                </mat-error>
+                <mat-error *ngIf="eventForm.get('title')?.hasError('minlength')">
+                  Title must be at least 3 characters
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Event Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="eventForm.get('date')?.hasError('required')">
+                  Date is required
+                </mat-error>
+              </mat-form-field>
+
+              <div class="time-inputs">
+                <mat-form-field appearance="outline" class="quarter-width">
+                  <mat-label>Start Time</mat-label>
+                  <input matInput type="time" formControlName="startTime">
+                  <mat-error *ngIf="eventForm.get('startTime')?.hasError('required')">
+                    Start time is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="quarter-width">
+                  <mat-label>End Time</mat-label>
+                  <input matInput type="time" formControlName="endTime">
+                  <mat-error *ngIf="eventForm.get('endTime')?.hasError('required')">
+                    End time is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Event Logo URL</mat-label>
+                <input matInput formControlName="eventLogo" placeholder="Enter logo URL">
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Event Description</mat-label>
+                <textarea matInput formControlName="eventDescription" rows="4" placeholder="Describe your event"></textarea>
+                <mat-error *ngIf="eventForm.get('eventDescription')?.hasError('required')">
+                  Description is required
+                </mat-error>
+                <mat-error *ngIf="eventForm.get('eventDescription')?.hasError('minlength')">
+                  Description must be at least 10 characters
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row checkbox-row">
+              <mat-checkbox formControlName="requestTickets">Request Tickets</mat-checkbox>
+              <mat-checkbox formControlName="isEventVenue">Is Event Venue</mat-checkbox>
+            </div>
+
+            <!-- Event Images Section -->
+            <div class="form-section">
+              <h4>Event Images</h4>
+              <div class="image-urls-container">
+                <div *ngFor="let url of eventImageUrls; let i = index" class="image-url-item">
+                  <span class="image-url">{{ url }}</span>
+                  <button type="button" mat-icon-button color="warn" (click)="removeImageUrl(i)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+                <button type="button" mat-stroked-button (click)="addImageUrl()">
+                  <mat-icon>add</mat-icon>
+                  Add Image URL
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- Permissions Tab -->
+        <!-- <mat-tab label="Permissions">
+          <div class="tab-content" formGroupName="permissions">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Event Application</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div formGroupName="eventApplication">
+                <mat-checkbox formControlName="submitted">Application Submitted</mat-checkbox>
+              </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Traffic Application</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div formGroupName="trafficApplication" class="checkbox-group">
+                <mat-checkbox formControlName="required">Required</mat-checkbox>
+                <mat-checkbox formControlName="submissionIn">Submission In</mat-checkbox>
+              </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Noise Exemption</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div formGroupName="noiseExemption">
+                <mat-checkbox formControlName="required">Required</mat-checkbox>
+              </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Construction</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div formGroupName="construction" class="checkbox-group">
+                <mat-checkbox formControlName="required">Required</mat-checkbox>
+                <mat-checkbox formControlName="hasVendor">Has Vendor</mat-checkbox>
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </mat-tab> -->
+
+        <!-- Infrastructure Tab -->
+        <!-- <mat-tab label="Infrastructure">
+          <div class="tab-content" formGroupName="infrastructure">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Basic Infrastructure</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="checkbox-group">
+                <div formGroupName="fencing">
+                  <mat-checkbox formControlName="vendor">Fencing Vendor</mat-checkbox>
+                </div>
+                <div formGroupName="scaffolding">
+                  <mat-checkbox formControlName="vendor">Scaffolding Vendor</mat-checkbox>
+                </div>
+                <div formGroupName="seatingAndTables">
+                  <mat-checkbox formControlName="vendor">Seating & Tables Vendor</mat-checkbox>
+                </div>
+              </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Electricity</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div formGroupName="electricity" class="checkbox-group">
+                <div formGroupName="generator">
+                  <mat-checkbox formControlName="vendor">Generator Vendor</mat-checkbox>
+                </div>
+                <div formGroupName="electrician">
+                  <mat-checkbox formControlName="vendor">Electrician Vendor</mat-checkbox>
+                </div>
+              </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Stage, Lighting, Sound & Screens</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div formGroupName="stageLightingSoundScreens" class="checkbox-group">
+                <div formGroupName="stage">
+                  <mat-checkbox formControlName="vendor">Stage Vendor</mat-checkbox>
+                </div>
+                <div formGroupName="lighting">
+                  <mat-checkbox formControlName="vendor">Lighting Vendor</mat-checkbox>
+                </div>
+                <div formGroupName="sound">
+                  <mat-checkbox formControlName="vendor">Sound Vendor</mat-checkbox>
+                </div>
+                <div formGroupName="screens">
+                  <mat-checkbox formControlName="vendor">Screens Vendor</mat-checkbox>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </mat-tab> -->
+
+        <!-- Safety Tab -->
+        <!-- <mat-tab label="Safety">
+          <div class="tab-content" formGroupName="safety">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Security</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div formGroupName="security">
+                <div class="form-row">
+                  <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Main Category ID</mat-label>
+                    <input matInput formControlName="mainCategoryId">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Sub Category ID</mat-label>
+                    <input matInput formControlName="subCategoryId">
+                  </mat-form-field>
+                </div>
+                <div class="form-row">
+                  <mat-checkbox formControlName="vendor">Has Vendor</mat-checkbox>
+                </div>
+                <div class="form-row">
+                  <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Vendor Name</mat-label>
+                    <input matInput formControlName="vendorName">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Plan File URL</mat-label>
+                    <input matInput formControlName="planFileUrl">
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Health & Safety</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div formGroupName="healthAndSafety">
+                <div class="form-row">
+                  <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Main Category ID</mat-label>
+                    <input matInput formControlName="mainCategoryId">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Sub Category ID</mat-label>
+                    <input matInput formControlName="subCategoryId">
+                  </mat-form-field>
+                </div>
+                <div class="checkbox-group">
+                  <mat-checkbox formControlName="vendor">Has Vendor</mat-checkbox>
+                  <mat-checkbox formControlName="riskAssessmentRequired">Risk Assessment Required</mat-checkbox>
+                </div>
+              </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Medical Services</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div formGroupName="medicalServices">
+                <div class="form-row">
+                  <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Main Category ID</mat-label>
+                    <input matInput formControlName="mainCategoryId">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Sub Category ID</mat-label>
+                    <input matInput formControlName="subCategoryId">
+                  </mat-form-field>
+                </div>
+                <mat-checkbox formControlName="vendor">Has Vendor</mat-checkbox>
+              </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Fire Fighting</mat-panel-title>
+              </mat-expansion-panel-header>
+              <div formGroupName="fireFighting">
+                <div class="form-row">
+                  <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Main Category ID</mat-label>
+                    <input matInput formControlName="mainCategoryId">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Sub Category ID</mat-label>
+                    <input matInput formControlName="subCategoryId">
+                  </mat-form-field>
+                </div>
+                <div class="form-row">
+                  <mat-checkbox formControlName="vendor">Has Vendor</mat-checkbox>
+                </div>
+                <div class="form-row">
+                  <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Vendor Name</mat-label>
+                    <input matInput formControlName="vendorName">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="half-width">
+                    <mat-label>Plan File URL</mat-label>
+                    <input matInput formControlName="planFileUrl">
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </mat-tab> -->
+
+        <!-- Tickets Tab -->
+        <!-- <mat-tab label="Tickets" *ngIf="eventForm.get('requestTickets')?.value">
+          <div class="tab-content">
+            <div class="form-section">
+              <div class="section-header">
+                <h4>Ticket Types</h4>
+                <button type="button" mat-stroked-button (click)="addTicket()">
+                  <mat-icon>add</mat-icon>
+                  Add Ticket Type
+                </button>
+              </div>
+              
+              <div formArrayName="tickets">
+                <div *ngFor="let ticket of ticketsArray.controls; let i = index" [formGroupName]="i" class="ticket-item">
+                  <div class="form-row">
+                    <mat-form-field appearance="outline" class="third-width">
+                      <mat-label>Ticket Type</mat-label>
+                      <input matInput formControlName="typeOfTickets" placeholder="e.g., General, VIP">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="third-width">
+                      <mat-label>Total Amount</mat-label>
+                      <input matInput type="number" formControlName="amount" placeholder="1000">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="third-width">
+                      <mat-label>Available Tickets</mat-label>
+                      <input matInput type="number" formControlName="avaibleTickets" placeholder="950">
+                    </mat-form-field>
+                  </div>
+                  <button type="button" mat-icon-button color="warn" (click)="removeTicket(i)" class="remove-ticket-btn">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab> -->
+
+        <!-- Seating Arrangement Tab -->
+        <!-- <mat-tab label="Seating">
+          <div class="tab-content" formGroupName="seatingArrangement">
+            <div class="checkbox-group">
+              <mat-checkbox formControlName="isSeatedEvent">Is Seated Event</mat-checkbox>
+              <mat-checkbox formControlName="isOpenAirEvent">Is Open Air Event</mat-checkbox>
+              <mat-checkbox formControlName="plotsForTents">Plots for Tents</mat-checkbox>
+            </div>
+          </div>
+        </mat-tab> -->
+
+      </mat-tab-group>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!eventForm.valid">
+      {{ isEdit ? 'Update Event' : 'Create Event' }}
+    </button>
+  </mat-dialog-actions>
+</div>

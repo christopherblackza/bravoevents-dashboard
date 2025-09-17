@@ -1,0 +1,62 @@
+.dashboard-container {
+      padding: 20px;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .stat-card {
+      padding: 0;
+    }
+    
+    .stat-content {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .stat-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      margin-right: 20px;
+    }
+    
+    .stat-icon.users { color: #4caf50; }
+    .stat-icon.reports { color: #f44336; }
+    .stat-icon.events { color: #2196f3; }
+    .stat-icon.revenue { color: #ff9800; }
+    
+    .stat-info h3 {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .stat-number {
+      margin: 5px 0 0 0;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    .quick-actions {
+      margin-top: 40px;
+    }
+    
+    .actions-grid {
+      display: flex;
+      gap: 16px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .actions-grid button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }

@@ -1,0 +1,174 @@
+.user-documents-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  background: white;
+  color: #333;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .back-button {
+    margin-right: 16px;
+  }
+
+  .page-title {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .user-name {
+    font-size: 16px;
+    color: #666;
+  }
+}
+
+.documents-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+
+  mat-card-header {
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+  }
+
+  mat-card-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  mat-card-subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-top: 4px;
+  }
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.documents-table {
+  width: 100%;
+  
+  th {
+    font-weight: 600;
+    color: #333;
+    background-color: #f5f5f5;
+  }
+
+  td, th {
+    padding: 16px 12px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  tr:hover {
+    background-color: #f9f9f9;
+  }
+}
+
+.document-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .file-icon {
+    color: #1976d2;
+    font-size: 24px;
+  }
+
+  .document-details {
+    .document-name {
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 2px;
+    }
+
+    .document-size {
+      font-size: 12px;
+      color: #666;
+    }
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  button {
+    min-width: auto;
+    padding: 8px 16px;
+
+    mat-icon {
+      margin-right: 4px;
+      font-size: 18px;
+    }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+
+  .empty-icon {
+    font-size: 64px;
+    color: #ccc;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    margin: 0 0 8px 0;
+    font-weight: 500;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .user-documents-container {
+    padding: 10px;
+  }
+
+  .page-header {
+    .page-title {
+      font-size: 18px;
+    }
+
+    .user-name {
+      display: none;
+    }
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 4px;
+
+    button {
+      width: 100%;
+      min-width: 100px;
+    }
+  }
+
+  .documents-table {
+    font-size: 14px;
+
+    td, th {
+      padding: 12px 8px;
+    }
+  }
+}

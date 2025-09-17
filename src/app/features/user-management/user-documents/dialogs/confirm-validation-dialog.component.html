@@ -1,0 +1,41 @@
+<div class="dialog-container">
+      <div class="dialog-header">
+        <mat-icon class="warning-icon">warning</mat-icon>
+        <h2 mat-dialog-title>Confirm Document Validation</h2>
+      </div>
+      
+      <mat-dialog-content class="dialog-content">
+        <p class="confirmation-message">
+          Are you sure you want to validate the document 
+          <strong>"{{ data.document.title }}"</strong> 
+          for user <strong>{{ data.userName }}</strong>?
+        </p>
+        
+        <div class="document-info">
+          <div class="info-item">
+            <mat-icon>description</mat-icon>
+            <span>{{ data.document.title }}</span>
+          </div>
+          <div class="info-item">
+            <mat-icon>person</mat-icon>
+            <span>{{ data.userName }}</span>
+          </div>
+        </div>
+        
+        <div class="warning-note">
+          <mat-icon>info</mat-icon>
+          <span>This action will mark the document as validated and cannot be easily undone.</span>
+        </div>
+      </mat-dialog-content>
+      
+      <mat-dialog-actions class="dialog-actions">
+        <button mat-stroked-button (click)="onCancel()">
+          <mat-icon>cancel</mat-icon>
+          Cancel
+        </button>
+        <button mat-raised-button color="primary" (click)="onConfirm()">
+          <mat-icon>check_circle</mat-icon>
+          Validate Document
+        </button>
+      </mat-dialog-actions>
+    </div>

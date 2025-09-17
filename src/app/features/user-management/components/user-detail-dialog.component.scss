@@ -1,0 +1,41 @@
+  .user-detail-dialog {
+      min-width: 600px;
+    }
+
+    .dialog-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .user-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .user-info h2 {
+      margin: 0;
+    }
+
+    .user-info p {
+      margin: 4px 0 0 0;
+      color: #666;
+    }
+
+    .profile-section, .details-section {
+      padding: 16px 0;
+    }
+
+    .field-group {
+      margin-bottom: 16px;
+    }
+
+    .field-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: #333;
+    }

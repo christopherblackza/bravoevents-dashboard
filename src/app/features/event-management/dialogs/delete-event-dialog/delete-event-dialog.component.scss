@@ -1,0 +1,157 @@
+.delete-dialog {
+  width: 100%;
+  min-width: 400px;
+  max-width: 500px;
+
+  .dialog-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 24px 16px 24px;
+    border-bottom: 1px solid #e0e0e0;
+
+    .warning-icon {
+      color: #ff9800;
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+    }
+
+    h2 {
+      margin: 0;
+      color: rgba(0, 0, 0, 0.87);
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+
+  .dialog-content {
+    padding: 24px;
+
+    .confirmation-text {
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.87);
+      margin-bottom: 16px;
+      line-height: 1.5;
+
+      strong {
+        color: #1976d2;
+      }
+    }
+
+    .warning-text {
+      font-size: 14px;
+      color: #f44336;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+
+    .event-details {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border-radius: 8px;
+      border-left: 4px solid #1976d2;
+
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .label {
+          font-weight: 500;
+          color: rgba(0, 0, 0, 0.7);
+          font-size: 14px;
+        }
+
+        .value {
+          color: rgba(0, 0, 0, 0.87);
+          font-size: 14px;
+          text-align: right;
+          max-width: 60%;
+          word-break: break-word;
+        }
+      }
+    }
+  }
+
+  .dialog-actions {
+    padding: 16px 24px 24px 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    .cancel-btn {
+      color: rgba(0, 0, 0, 0.54);
+    }
+
+    .delete-btn {
+      background-color: #f44336;
+      color: white;
+
+      mat-icon {
+        margin-right: 8px;
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+
+      &:hover {
+        background-color: #d32f2f;
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 480px) {
+  .delete-dialog {
+    min-width: 100%;
+    max-width: 100%;
+
+    .dialog-header {
+      padding: 16px;
+
+      .warning-icon {
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+    }
+
+    .dialog-content {
+      padding: 16px;
+
+      .event-details {
+        .detail-row {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 4px;
+
+          .value {
+            max-width: 100%;
+            text-align: left;
+          }
+        }
+      }
+    }
+
+    .dialog-actions {
+      padding: 16px;
+      flex-direction: column-reverse;
+      gap: 8px;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
