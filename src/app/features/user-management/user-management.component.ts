@@ -10,7 +10,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
-import { Observable } from 'rxjs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Observable, debounceTime, distinctUntilChanged, switchMap, startWith } from 'rxjs';
 import { UserProfile } from './models/user.models';
 import { UserManagementService } from './services/user-management.service';
 import { UserDetailDialogComponent } from './components/user-detail-dialog.component';
@@ -30,7 +33,10 @@ import { UserStats } from './models/user-stats.model';
     MatMenuModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatCardModule
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
   templateUrl: './user-management.component.html',
   styleUrls: ['user-management.component.scss']
@@ -40,12 +46,14 @@ export class UserManagementComponent implements OnInit {
   totalUsers = 0;
   pageSize = 50;
   currentPage = 0;
+  searchControl = new FormControl('');
+  isSearching = false;
 
   userStats: UserStats = {
     totalUsers: 0,
-    totalUsersWithRoleVendor: 0,
-    totalUsersWithRoleCoordinator: 0,
-    totalUsersWithRoleUser: 0
+    vendor: 0,
+    coordinator: 0,
+    users: 0
   };
   
   displayedColumns = ['firstName', 'lastName', 'email', 'status', 'role', 'actions'];
@@ -55,20 +63,50 @@ export class UserManagementComponent implements OnInit {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private router: Router
-  ) {
-    // this.stats$ = this.userService.getUserStats();
-  }
+  ) {}
 
   ngOnInit() {
     this.loadUsers();
-
     this.getUserStats();
+    this.setupSearch();
+  }
 
-  //    this.snackBar.open('Message sent successfully!', 'Close', {
-  //   duration: 3000, // duration in milliseconds
-  //   horizontalPosition: 'right', // 'start' | 'center' | 'end' | 'left' | 'right'
-  //   verticalPosition: 'top',     // 'top' | 'bottom'
-  // });
+  setupSearch() {
+    this.searchControl.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(query => {
+        if (query && query.trim().length > 0) {
+          this.isSearching = true;
+          return this.userService.searchUsers(query.trim());
+        } else {
+          this.isSearching = false;
+          this.loadUsers();
+          return [];
+        }
+      })
+    ).subscribe({
+      next: (users) => {
+        if (this.isSearching) {
+          this.users = users;
+          this.totalUsers = users.length;
+        }
+      },
+      error: (error) => {
+        this.snackBar.open('Error searching users', 'Close', { 
+          duration: 3000, 
+          horizontalPosition: 'right', 
+          verticalPosition: 'top' 
+        });
+        this.isSearching = false;
+      }
+    });
+  }
+
+  clearSearch() {
+    this.searchControl.setValue('');
+    this.isSearching = false;
+    this.loadUsers();
   }
 
   getUserStats() {
@@ -108,17 +146,18 @@ export class UserManagementComponent implements OnInit {
   }
 
   loadUsers() {
-    this.userService.getUsers().subscribe({
-      next: (result) => {
-        this.users = result.userData;
-        console.error('USERS', this.users)
-        this.totalUsers = this.users.length;
-      },
-      error: (error: any) => {
-        
-        this.snackBar.open('Error loading users', 'Close', { duration: 3000, horizontalPosition: 'right', verticalPosition: 'top' });
-      }
-    });
+    if (!this.isSearching) {
+      this.userService.getUsers().subscribe({
+        next: (result) => {
+          this.users = result.items;
+          console.error('USERS', this.users)
+          this.totalUsers = this.users.length;
+        },
+        error: (error: any) => {
+          this.snackBar.open('Error loading users', 'Close', { duration: 3000, horizontalPosition: 'right', verticalPosition: 'top' });
+        }
+      });
+    }
   }
 
   onPageChange(event: PageEvent) {
@@ -126,7 +165,6 @@ export class UserManagementComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.loadUsers();
   }
-
 
   viewVerificationDocuments(user: User) {
     this.router.navigate(['/users/documents'], {
@@ -136,7 +174,6 @@ export class UserManagementComponent implements OnInit {
       }
     });
   }
-
 
   getStatusColor(status: string): string {
     switch (status) {

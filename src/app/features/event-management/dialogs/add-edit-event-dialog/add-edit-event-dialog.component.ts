@@ -33,7 +33,7 @@ import { Event, CreateEventRequest, UpdateEventRequest } from '../../models/even
     MatTabsModule,
     MatExpansionModule,
     MatChipsModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   templateUrl: './add-edit-event-dialog.component.html',
   styleUrls: ['./add-edit-event-dialog.component.scss']
@@ -60,139 +60,53 @@ export class AddEditEventDialogComponent implements OnInit {
 
   private createForm(): FormGroup {
     return this.fb.group({
-      // Basic Information
-      title: ['', [Validators.required, Validators.minLength(3)]],
-      date: ['', Validators.required],
+      // Basic Information matching screenshot
+      eventName: ['', [Validators.required, Validators.minLength(3)]],
+      eventDate: ['', Validators.required],
       startTime: ['', Validators.required],
       endTime: ['', Validators.required],
-      eventLogo: [''],
+      typeOfEvent: ['', Validators.required],
+      amountOfPeopleExpected: ['', [Validators.required, Validators.min(1)]],
+      city: ['', Validators.required],
       eventDescription: ['', [Validators.required, Validators.minLength(10)]],
-      requestTickets: [false],
-      isEventVenue: [false],
+      eventLogo: [''],
+      advertisingPhotos: [[]],
+      hasEventVenue: ['', Validators.required],
+      eventVenue: [''],
+      requestTickets: ['', Validators.required],
       
-      // Permissions
-      permissions: this.fb.group({
-        eventApplication: this.fb.group({
-          submitted: [false]
-        }),
-        trafficApplication: this.fb.group({
-          required: [false],
-          submissionIn: [false]
-        }),
-        noiseExemption: this.fb.group({
-          required: [false]
-        }),
-        construction: this.fb.group({
-          required: [false],
-          hasVendor: [false]
-        })
-      }),
-
-      // Infrastructure
-      infrastructure: this.fb.group({
-        fencing: this.fb.group({
-          vendor: [false]
-        }),
-        scaffolding: this.fb.group({
-          vendor: [false]
-        }),
-        electricity: this.fb.group({
-          generator: this.fb.group({
-            vendor: [false]
-          }),
-          electrician: this.fb.group({
-            vendor: [false]
-          })
-        }),
-        seatingAndTables: this.fb.group({
-          vendor: [false]
-        }),
-        stageLightingSoundScreens: this.fb.group({
-          stage: this.fb.group({
-            vendor: [false]
-          }),
-          lighting: this.fb.group({
-            vendor: [false]
-          }),
-          sound: this.fb.group({
-            vendor: [false]
-          }),
-          screens: this.fb.group({
-            vendor: [false]
-          })
-        })
-      }),
-
-      // Safety
-      safety: this.fb.group({
-        security: this.fb.group({
-          mainCategoryId: [''],
-          subCategoryId: [''],
-          vendor: [false],
-          vendorName: [''],
-          planFileUrl: ['']
-        }),
-        healthAndSafety: this.fb.group({
-          mainCategoryId: [''],
-          subCategoryId: [''],
-          vendor: [false],
-          riskAssessmentRequired: [false]
-        }),
-        medicalServices: this.fb.group({
-          mainCategoryId: [''],
-          subCategoryId: [''],
-          vendor: [false]
-        }),
-        fireFighting: this.fb.group({
-          mainCategoryId: [''],
-          subCategoryId: [''],
-          vendor: [false],
-          vendorName: [''],
-          planFileUrl: ['']
-        })
-      }),
-
-      // Seating Arrangement
-      seatingArrangement: this.fb.group({
-        isSeatedEvent: [false],
-        isOpenAirEvent: [false],
-        plotsForTents: [false]
-      }),
-
-      // Tickets
-      tickets: this.fb.array([])
+      // Type of Event section
+      eventType: this.fb.group({
+        seatedEvent: [false],
+        openAirEvent: [false],
+        plotForTents: [false]
+      })
     });
   }
 
   private populateForm(event: Event): void {
     this.eventForm.patchValue({
-      title: event.title,
-      date: new Date(event.date),
+      eventName: event.title,
+      eventDate: new Date(event.date),
       startTime: event.startTime,
       endTime: event.endTime,
-      eventLogo: event.eventLogo,
+      typeOfEvent: event.typeOfEvent || '',
+      amountOfPeopleExpected: event.amountOfPeopleExpected || '',
+      city: event.city || '',
       eventDescription: event.eventDescription,
-      requestTickets: event.requestTickets,
-      isEventVenue: event.isEventVenue,
-      permissions: event.permissions,
-      infrastructure: event.infrastructure,
-      safety: event.safety,
-      seatingArrangement: event.seatingArrangement
+      eventLogo: event.eventLogo,
+      advertisingPhotos: event.eventImageUrls || [],
+      hasEventVenue: event.isEventVenue ? 'yes' : 'no',
+      eventVenue: event.eventVenue || '',
+      requestTickets: event.requestTickets ? 'yes' : 'no',
+      eventType: {
+        seatedEvent: event.seatingArrangement?.isSeatedEvent || false,
+        openAirEvent: event.seatingArrangement?.isOpenAirEvent || false,
+        plotForTents: event.seatingArrangement?.plotsForTents || false
+      }
     });
 
     this.eventImageUrls = event.eventImageUrls || [];
-
-    // Populate tickets if they exist
-    if (event.vendorsStalls?.ticketingAndSales?.tickets) {
-      const ticketsArray = this.eventForm.get('tickets') as FormArray;
-      event.vendorsStalls.ticketingAndSales.tickets.forEach(ticket => {
-        ticketsArray.push(this.fb.group({
-          typeOfTickets: [ticket.typeOfTickets],
-          amount: [ticket.amount],
-          avaibleTickets: [ticket.avaibleTickets]
-        }));
-      });
-    }
   }
 
   get ticketsArray(): FormArray {
@@ -228,18 +142,38 @@ export class AddEditEventDialogComponent implements OnInit {
       const formValue = this.eventForm.value;
       
       const eventData: CreateEventRequest | UpdateEventRequest = {
-        userId: this.data.event?.userId || 'current-user-id', // In real app, get from auth service
-        title: formValue.title,
-        date: formValue.date,
+        userId: this.data.event?.userId || 'current-user-id',
+        title: formValue.eventName,
+        date: formValue.eventDate,
         startTime: formValue.startTime,
         endTime: formValue.endTime,
+        typeOfEvent: formValue.typeOfEvent,
+        amountOfPeopleExpected: formValue.amountOfPeopleExpected,
+        city: formValue.city,
         eventLogo: formValue.eventLogo,
-        requestTickets: formValue.requestTickets,
-        isEventVenue: formValue.isEventVenue,
-        eventImageUrls: this.eventImageUrls,
+        requestTickets: formValue.requestTickets === 'yes',
+        isEventVenue: formValue.hasEventVenue === 'yes',
+        eventVenue: formValue.eventVenue,
+        eventImageUrls: formValue.advertisingPhotos,
         eventDescription: formValue.eventDescription,
-        permissions: formValue.permissions,
-        infrastructure: formValue.infrastructure,
+        permissions: this.data.event?.permissions || {
+          eventApplication: { submitted: false },
+          trafficApplication: { required: false },
+          noiseExemption: { required: false },
+          construction: { required: false }
+        },
+        infrastructure: this.data.event?.infrastructure || {
+          fencing: { vendor: false },
+          scaffolding: { vendor: false },
+          electricity: { generator: { vendor: false }, electrician: { vendor: false } },
+          seatingAndTables: { vendor: false },
+          stageLightingSoundScreens: {
+            stage: { vendor: false },
+            lighting: { vendor: false },
+            sound: { vendor: false },
+            screens: { vendor: false }
+          }
+        },
         decoration: this.data.event?.decoration || {
           decor: { vendor: false },
           lighting: { vendor: false },
@@ -257,22 +191,22 @@ export class AddEditEventDialogComponent implements OnInit {
             cleaners: { vendor: false }
           }
         },
-        safety: formValue.safety,
+        safety: this.data.event?.safety || {
+          security: { vendor: false },
+          healthAndSafety: { vendor: false },
+          medicalServices: { vendor: false },
+          fireFighting: { vendor: false }
+        },
         camping: this.data.event?.camping || {
           campingGlamping: { vendor: false }
         },
-        vendorsStalls: {
+        vendorsStalls: this.data.event?.vendorsStalls || {
           ticketingAndSales: {
-            mainCategoryId: formValue.safety?.security?.mainCategoryId || '',
-            subCategoryId: formValue.safety?.security?.subCategoryId || '',
-            vendor: formValue.requestTickets,
-            tickets: formValue.tickets
+            vendor: formValue.requestTickets === 'yes',
+            tickets: []
           },
-          stalls: this.data.event?.vendorsStalls?.stalls || {
+          stalls: {
             vendors: {
-              mainCategoryId: '',
-              subCategoryId: '',
-              leafCategoryId: '',
               vendor: false,
               amountFood: '0',
               pricePerStall: '0',
@@ -286,9 +220,6 @@ export class AddEditEventDialogComponent implements OnInit {
               required: false
             },
             catering: {
-              mainCategoryId: '',
-              subCategoryId: '',
-              leafCategoryId: '',
               vendor: false,
               vendorName: ''
             }
@@ -325,7 +256,11 @@ export class AddEditEventDialogComponent implements OnInit {
         staffingSupportDto: this.data.event?.staffingSupportDto || {
           staff: { vendor: false }
         },
-        seatingArrangement: formValue.seatingArrangement
+        seatingArrangement: {
+          isSeatedEvent: formValue.eventType.seatedEvent,
+          isOpenAirEvent: formValue.eventType.openAirEvent,
+          plotsForTents: formValue.eventType.plotForTents
+        }
       };
 
       this.dialogRef.close(eventData);

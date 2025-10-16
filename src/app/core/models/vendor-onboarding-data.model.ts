@@ -11,6 +11,13 @@ export interface VendorOnboardingData {
   showCase: ShowCase;
 }
 
+export interface OnboardingDocuments {
+  id: string;
+  title: string;
+  documentUrl: string;
+  verificationStatus: string;
+}
+
 interface Service {
   mainCategoryId: string;
   subCategories: SubCategory[];

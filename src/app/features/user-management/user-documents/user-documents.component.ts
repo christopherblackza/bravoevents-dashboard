@@ -12,7 +12,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { UserDocument } from '../models/document.models';
 import { User } from '../../../core/models/auth.models';
 import { UserManagementService } from '../services/user-management.service';
-import { SupportingDocument, VendorOnboardingData } from '../../../core/models/vendor-onboarding-data.model';
+import { OnboardingDocuments, SupportingDocument, VendorOnboardingData } from '../../../core/models/vendor-onboarding-data.model';
 import { ConfirmValidationDialogComponent } from './dialogs/confirm-validation-dialog.component';
 
 @Component({
@@ -33,59 +33,12 @@ import { ConfirmValidationDialogComponent } from './dialogs/confirm-validation-d
   styleUrls: ['./user-documents.component.scss']
 })
 export class UserDocumentsComponent implements OnInit {
-  documents: VendorOnboardingData['supportingDoc'] = [];
+  documents: OnboardingDocuments[] = [];
   userId: string = '';
   userName: string = '';
   
-  displayedColumns = ['title', 'type', 'uploadDate', 'validationStatus', 'actions'];
-
-  // Dummy data - will be replaced with API call
-  dummyDocuments: UserDocument[] = [
-    {
-      id: '1',
-      name: 'National ID Card.pdf',
-      type: 'identity',
-      uploadDate: new Date('2024-01-15'),
-      fileUrl: 'https://example.com/documents/national-id-1.pdf',
-      fileSize: 2048576,
-      mimeType: 'application/pdf',
-      status: 'approved',
-      userId: '68ae113366fdb57cb18b69b5'
-    },
-    {
-      id: '2',
-      name: 'Utility Bill January 2024.pdf',
-      type: 'proof_of_address',
-      uploadDate: new Date('2024-01-20'),
-      fileUrl: 'https://example.com/documents/utility-bill-1.pdf',
-      fileSize: 1536000,
-      mimeType: 'application/pdf',
-      status: 'pending',
-      userId: '68ae113366fdb57cb18b69b5'
-    },
-    {
-      id: '3',
-      name: 'Business Registration Certificate.pdf',
-      type: 'business_license',
-      uploadDate: new Date('2024-01-25'),
-      fileUrl: 'https://example.com/documents/business-cert-1.pdf',
-      fileSize: 3072000,
-      mimeType: 'application/pdf',
-      status: 'approved',
-      userId: '68ae113366fdb57cb18b69b5'
-    },
-    {
-      id: '4',
-      name: 'Bank Statement.pdf',
-      type: 'other',
-      uploadDate: new Date('2024-02-01'),
-      fileUrl: 'https://example.com/documents/bank-statement-1.pdf',
-      fileSize: 2560000,
-      mimeType: 'application/pdf',
-      status: 'rejected',
-      userId: '68ae113366fdb57cb18b69b5'
-    }
-  ];
+  // displayedColumns = ['title', 'type', 'uploadDate', 'verificationStatus', 'actions'];
+  displayedColumns = ['title', 'verificationStatus', 'actions'];
 
   constructor(
     private route: ActivatedRoute,
@@ -123,8 +76,8 @@ export class UserDocumentsComponent implements OnInit {
   loadDocuments() {
     // In a real application, this would be an API call
     this.userService.getUserSupportingDocuments(this.userId).subscribe({
-      next: (documents: VendorOnboardingData) => {
-        this.documents = documents.supportingDoc || [];
+      next: (documents: OnboardingDocuments[]) => {
+        this.documents = documents || [];
         console.error("DOCUMENTS:", this.documents)
       },
       error: () => {
@@ -210,7 +163,8 @@ export class UserDocumentsComponent implements OnInit {
   }
 
   private performDocumentValidation(document: SupportingDocument) {
-    this.userService.validateUserDocuments(this.userId, document._id).subscribe({
+    console.log('Validating document:', document);
+    this.userService.validateUserDocuments(document._id).subscribe({
       next: (response) => {
         this.snackBar.open('Document validated successfully', 'Close', { 
           duration: 3000,

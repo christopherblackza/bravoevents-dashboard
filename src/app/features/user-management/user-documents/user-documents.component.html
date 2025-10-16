@@ -52,13 +52,13 @@
           </ng-container>
 
           <!-- Status Column -->
-          <ng-container matColumnDef="validationStatus">
+          <ng-container matColumnDef="verificationStatus">
             <th mat-header-cell *matHeaderCellDef>Status</th>
             <td mat-cell *matCellDef="let document">
-              <mat-chip [color]="getStatusColor(document.validationStatus)" selected>
-                <mat-icon *ngIf="document.validationStatus === 'approved'">check_circle</mat-icon>
-                <mat-icon *ngIf="document.validationStatus === 'pending'">schedule</mat-icon>
-                <mat-icon *ngIf="document.validationStatus === 'rejected'">cancel</mat-icon>
+              <mat-chip [color]="getStatusColor(document.verificationStatus)" selected>
+                <mat-icon *ngIf="document.verificationStatus === 'approved'">check_circle</mat-icon>
+                <mat-icon *ngIf="document.verificationStatus === 'pending'">schedule</mat-icon>
+                <mat-icon *ngIf="document.verificationStatus === 'rejected'">cancel</mat-icon>
                 {{ document.status | titlecase }}
               </mat-chip>
             </td>
@@ -78,7 +78,7 @@
                   Download
                 </button>
                 <!-- Validate -->
-                <button mat-raised-button color="primary" *ngIf="document.validationStatus === 'pending'" (click)="validateDocument(document)">
+                <button mat-raised-button color="primary" *ngIf="document.verificationStatus === 'pending'" (click)="validateDocument(document)">
                   <mat-icon>check_circle</mat-icon>
                   Validate
                 </button>

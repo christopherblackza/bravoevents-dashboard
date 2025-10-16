@@ -222,9 +222,13 @@ export interface Event {
   date: Date;
   startTime: string;
   endTime: string;
+  typeOfEvent?: string;
+  amountOfPeopleExpected?: number;
+  city?: string;
   eventLogo?: string;
   requestTickets: boolean;
   isEventVenue: boolean;
+  eventVenue?: string;
   eventImageUrls: string[];
   eventDescription: string;
   permissions: Permissions;
@@ -249,9 +253,13 @@ export interface CreateEventRequest {
   date: Date;
   startTime: string;
   endTime: string;
+  typeOfEvent?: string;
+  amountOfPeopleExpected?: number;
+  city?: string;
   eventLogo?: string;
   requestTickets: boolean;
   isEventVenue: boolean;
+  eventVenue?: string;
   eventImageUrls: string[];
   eventDescription: string;
   permissions: Permissions;

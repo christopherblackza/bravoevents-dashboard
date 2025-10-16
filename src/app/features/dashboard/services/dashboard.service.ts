@@ -3,13 +3,14 @@ import { Observable, from, map, switchMap, tap } from 'rxjs';
 import { UserListResponse } from '../../../core/models/user.models';
 import { HttpClient } from '@angular/common/http';
 import { VendorOnboardingData } from '../../../core/models/vendor-onboarding-data.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardService {
 
-   private readonly API_URL = 'http://localhost:3000/v2/api';
+   private readonly ADMIN_API_URL = environment.apiUrl + '/superadmin';
 
    
   constructor(
@@ -18,7 +19,7 @@ export class DashboardService {
 
 
   getDashboardStats(): Observable<{ totalUsers: number; totalEvents: number }> {
-    return this.http.get<{ totalUsers: number; totalEvents: number }>(`${this.API_URL}/user/dashboard-stats`);
+    return this.http.get<{ totalUsers: number; totalEvents: number }>(`${this.ADMIN_API_URL}/dashboard-stats`);
   }
 
 }
