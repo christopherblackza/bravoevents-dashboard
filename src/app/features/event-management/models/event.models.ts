@@ -216,7 +216,7 @@ export interface SeatingArrangement {
 }
 
 export interface Event {
-  id: string;
+  _id: string;
   userId: string;
   title: string;
   date: Date;

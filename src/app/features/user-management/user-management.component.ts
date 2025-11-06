@@ -170,6 +170,7 @@ export class UserManagementComponent implements OnInit {
     this.router.navigate(['/users/documents'], {
       queryParams: {
         userId: user._id,
+        userRole: user.role,
         userName: `${user.firstName} ${user.lastName}`
       }
     });

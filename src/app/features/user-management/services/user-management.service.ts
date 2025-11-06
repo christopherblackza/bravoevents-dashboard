@@ -41,8 +41,8 @@ export class UserManagementService {
     });
   }
 
-  getUserSupportingDocuments(userId: string) : Observable<OnboardingDocuments[]> {
-    return this.http.get<OnboardingDocuments[]>(`${this.API_ADMIN_URL}/user-onboarding/${userId}`, {});
+  getUserSupportingDocuments(userId: string, userRole: string) : Observable<OnboardingDocuments[]> {
+    return this.http.get<OnboardingDocuments[]>(`${this.API_ADMIN_URL}/user-onboarding/${userId}/${userRole}`, {});
   }
 
   validateUserDocuments(documentId: string): Observable<any> {

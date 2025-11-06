@@ -5,13 +5,14 @@ import { tap } from 'rxjs/operators';
 import { LoginRequest, LoginResponse, User } from '../models/auth.models';
 import { TokenStorageService } from '../../auth/services/token-storage.service';
 import { TokenResponse } from '../../auth/interfaces/auth.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private readonly API_URL = 'http://localhost:3000/v2/api';
+  private readonly API_URL = `${environment.apiUrl}/v2/api`;
   
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();

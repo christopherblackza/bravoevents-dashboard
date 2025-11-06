@@ -35,6 +35,7 @@ import { ConfirmValidationDialogComponent } from './dialogs/confirm-validation-d
 export class UserDocumentsComponent implements OnInit {
   documents: OnboardingDocuments[] = [];
   userId: string = '';
+  userRole: string = '';
   userName: string = '';
   
   // displayedColumns = ['title', 'type', 'uploadDate', 'verificationStatus', 'actions'];
@@ -52,6 +53,7 @@ export class UserDocumentsComponent implements OnInit {
     console.log("HERE")
     this.route.queryParams.subscribe(params => {
       this.userId = params['userId'] || '';
+      this.userRole = params['userRole'] || '';
       this.userName = params['userName'] || 'Unknown User';
     });
     
@@ -75,13 +77,16 @@ export class UserDocumentsComponent implements OnInit {
 
   loadDocuments() {
     // In a real application, this would be an API call
-    this.userService.getUserSupportingDocuments(this.userId).subscribe({
+    this.userService.getUserSupportingDocuments(this.userId, this.userRole).subscribe({
       next: (documents: OnboardingDocuments[]) => {
         this.documents = documents || [];
         console.error("DOCUMENTS:", this.documents)
       },
-      error: () => {
-        this.snackBar.open('Error loading documents', 'Close', { duration: 3000 });
+      error: (error: any) => {
+        console.error('Error loading documents:', error);
+
+        const errorMsg = error ? error.error.message : 'Unknown error loading documents';
+        this.snackBar.open(errorMsg, 'Close', { duration: 3000 });
       }
     });
     
@@ -173,7 +178,8 @@ export class UserDocumentsComponent implements OnInit {
         // Refresh document list
         this.loadDocuments();
       },
-      error: () => {
+      error: (error) => {
+        console.error('Error validating document:', error);
         this.snackBar.open('Error validating document', 'Close', { 
           duration: 3000,
           panelClass: ['error-snackbar']

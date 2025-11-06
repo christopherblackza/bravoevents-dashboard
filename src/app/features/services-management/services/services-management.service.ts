@@ -8,7 +8,7 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class ServicesManagementService {
-   private readonly API_URL = 'http://localhost:3000/v2/api';
+   private readonly API_URL = `${environment.apiUrl}/v2/api`;
   private dummyServices: Service[] = [
     {
       "_id": { "$oid": "6854131669f9e0657c33db08" },

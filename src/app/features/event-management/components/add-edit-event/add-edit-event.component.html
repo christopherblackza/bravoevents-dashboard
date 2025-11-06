@@ -1,0 +1,309 @@
+<div class="page-container">
+  <!-- Page Header -->
+  <mat-toolbar class="page-header">
+    <button mat-icon-button (click)="onCancel()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1 class="page-title">{{ pageTitle }}</h1>
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!eventForm.valid || isLoading" class="save-button">
+      <mat-icon *ngIf="isLoading">hourglass_empty</mat-icon>
+      {{ isEdit ? 'Update Event' : 'Create Event' }}
+    </button>
+  </mat-toolbar>
+
+  <!-- Main Content -->
+  <div class="page-content">
+    <mat-card class="form-card">
+      <form [formGroup]="eventForm" class="event-form">
+        
+        <mat-tab-group animationDuration="0ms" class="form-tabs">
+          
+          <!-- Basic Information Tab -->
+          <mat-tab label="Basic">
+            <div class="tab-content">
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Event Name</mat-label>
+                  <input matInput formControlName="eventName" placeholder="Enter your event name">
+                  <mat-error *ngIf="eventForm.get('eventName')?.hasError('required')">
+                    Event name is required
+                  </mat-error>
+                  <mat-error *ngIf="eventForm.get('eventName')?.hasError('minlength')">
+                    Event name must be at least 3 characters
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Event Date</mat-label>
+                  <input matInput [matDatepicker]="picker" formControlName="eventDate" placeholder="yyyy/mm/dd">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                  <mat-error *ngIf="eventForm.get('eventDate')?.hasError('required')">
+                    Event date is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Start Time</mat-label>
+                  <input matInput type="time" formControlName="startTime" placeholder="--:--">
+                  <mat-icon matSuffix>schedule</mat-icon>
+                  <mat-error *ngIf="eventForm.get('startTime')?.hasError('required')">
+                    Start time is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>End Time</mat-label>
+                  <input matInput type="time" formControlName="endTime" placeholder="--:--">
+                  <mat-icon matSuffix>schedule</mat-icon>
+                  <mat-error *ngIf="eventForm.get('endTime')?.hasError('required')">
+                    End time is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Type of event</mat-label>
+                  <mat-select formControlName="typeOfEvent" placeholder="Select Your Event Type">
+                    <mat-option value="Live Music & Performances">Live Music & Performances</mat-option>
+                    <mat-option value="Gaming & eSports">Gaming & eSports</mat-option>
+                    <mat-option value="Culture, Travel & Experiences">Culture, Travel & Experiences</mat-option>
+                    <mat-option value="Tech & Innovation">Tech & Innovation</mat-option>
+                    <mat-option value="Virtual Event">Virtual Event</mat-option>
+                    <mat-option value="Social Event">Social Event</mat-option>
+                    <mat-option value="Hybrid Event">Hybrid Event</mat-option>
+                    <mat-option value="Science">Science</mat-option>
+                    <mat-option value="Sports Event">Sports Event</mat-option>
+                    <mat-option value="Corporate Event">Corporate Event</mat-option>
+                    <mat-option value="Entertainment Event">Entertainment Event</mat-option>
+                    <mat-option value="Travel & Experiences Event">Travel & Experiences Event</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="eventForm.get('typeOfEvent')?.hasError('required')">
+                    Event type is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Amount of people expected</mat-label>
+                  <input matInput type="number" formControlName="amountOfPeopleExpected" placeholder="0">
+                  <mat-error *ngIf="eventForm.get('amountOfPeopleExpected')?.hasError('required')">
+                    Expected attendance is required
+                  </mat-error>
+                  <mat-error *ngIf="eventForm.get('amountOfPeopleExpected')?.hasError('min')">
+                    Expected attendance must be at least 1
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>City</mat-label>
+                  <input matInput formControlName="city" placeholder="Enter your city">
+                  <mat-error *ngIf="eventForm.get('city')?.hasError('required')">
+                    City is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Event Description</mat-label>
+                  <textarea matInput formControlName="eventDescription" rows="4" placeholder="Enter your event description"></textarea>
+                  <mat-error *ngIf="eventForm.get('eventDescription')?.hasError('required')">
+                    Event description is required
+                  </mat-error>
+                  <mat-error *ngIf="eventForm.get('eventDescription')?.hasError('minlength')">
+                    Description must be at least 10 characters
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <!-- Event Logo Section -->
+              <div class="form-section">
+                <h4>Event Logo</h4>
+                <div class="file-upload-section">
+                  <button type="button" mat-stroked-button color="primary">
+                    <mat-icon>add</mat-icon>
+                    Add File
+                  </button>
+                  <button type="button" mat-icon-button>
+                    <mat-icon>file_download</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Upload Photos Section -->
+              <div class="form-section">
+                <h4>Upload 3 photos for advertising on Website / App</h4>
+                <div class="file-upload-section">
+                  <button type="button" mat-stroked-button color="primary">
+                    <mat-icon>add</mat-icon>
+                    Add Files
+                  </button>
+                  <button type="button" mat-icon-button>
+                    <mat-icon>file_download</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Event Venue Section -->
+              <div class="form-section">
+                <h4>Do you have an Event venue?</h4>
+                <mat-radio-group formControlName="hasEventVenue" class="radio-group">
+                  <mat-radio-button value="yes">Yes</mat-radio-button>
+                  <mat-radio-button value="no">No</mat-radio-button>
+                </mat-radio-group>
+                <mat-error *ngIf="eventForm.get('hasEventVenue')?.hasError('required')">
+                  Please select if you have an event venue
+                </mat-error>
+              </div>
+
+              <!-- Event Venue Input -->
+              <div class="form-row" *ngIf="eventForm.get('hasEventVenue')?.value === 'yes'">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Event Venue</mat-label>
+                  <input matInput formControlName="eventVenue" placeholder="Enter location">
+                </mat-form-field>
+              </div>
+
+              <!-- Request Tickets Section -->
+              <div class="form-section">
+                <h4>Request tickets to be sold from our site?</h4>
+                <mat-radio-group formControlName="requestTickets" class="radio-group">
+                  <mat-radio-button value="yes">Yes</mat-radio-button>
+                  <mat-radio-button value="no">No</mat-radio-button>
+                </mat-radio-group>
+                <mat-error *ngIf="eventForm.get('requestTickets')?.hasError('required')">
+                  Please select if you want tickets to be sold
+                </mat-error>
+              </div>
+
+              <!-- Type of Event Section -->
+              <div class="form-section">
+                <h4>Type of Event</h4>
+                <div formGroupName="eventType" class="event-type-section">
+                  <div class="event-type-option">
+                    <div class="event-type-header">
+                      <span>Seated Event</span>
+                      <button type="button" mat-stroked-button class="select-seats-btn" [disabled]="!eventForm.get('eventType.seatedEvent')?.value">
+                        Select Seats*
+                      </button>
+                    </div>
+                    <mat-checkbox formControlName="seatedEvent"></mat-checkbox>
+                  </div>
+
+                  <div class="event-type-option">
+                    <div class="event-type-header">
+                      <span>Open Air Event</span>
+                      <button type="button" mat-stroked-button class="select-seats-btn" [disabled]="!eventForm.get('eventType.openAirEvent')?.value">
+                        Select Seats*
+                      </button>
+                    </div>
+                    <mat-checkbox formControlName="openAirEvent"></mat-checkbox>
+                  </div>
+
+                  <div class="event-type-option">
+                    <div class="event-type-header">
+                      <span>Plot for tents</span>
+                      <button type="button" mat-stroked-button class="select-seats-btn" [disabled]="!eventForm.get('eventType.plotForTents')?.value">
+                        Select Seats*
+                      </button>
+                    </div>
+                    <mat-checkbox formControlName="plotForTents"></mat-checkbox>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+
+          <!-- Optional Section Tab -->
+          <mat-tab label="Optional">
+            <div class="tab-content">
+              <div class="optional-section-header">
+                <h3>Optional Section</h3>
+                <p class="section-description">Tell us what do you need.</p>
+              </div>
+
+              <!-- Camping & Glamping Section -->
+              <mat-expansion-panel class="optional-panel">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Camping & Glamping</mat-panel-title>
+                  <mat-icon>expand_more</mat-icon>
+                </mat-expansion-panel-header>
+                <div class="panel-content" formGroupName="camping">
+                  <div class="camping-section">
+                    <h4>1. Camping Glamping</h4>
+                    <p>Do you have a vendor?</p>
+                    <mat-radio-group formControlName="hasVendor" class="radio-group">
+                      <mat-radio-button value="yes">Yes</mat-radio-button>
+                      <mat-radio-button value="no">No</mat-radio-button>
+                    </mat-radio-group>
+                    
+                    <div class="vendor-input" *ngIf="eventForm.get('camping.hasVendor')?.value === 'yes'">
+                      <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Name of Vendor</mat-label>
+                        <input matInput formControlName="vendorName" placeholder="Enter name of vendor">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="action-buttons">
+                      <button type="button" mat-raised-button color="primary">Save</button>
+                      <button type="button" mat-button>Reset</button>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+
+              <!-- Infrastructure & Setup Section -->
+              <mat-expansion-panel class="optional-panel">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Infrastructure & Setup</mat-panel-title>
+                  <mat-icon>expand_more</mat-icon>
+                </mat-expansion-panel-header>
+                <div class="panel-content" formGroupName="infrastructure">
+                  <div class="infrastructure-section">
+                    <p>Infrastructure and setup requirements for your event.</p>
+                    <!-- Infrastructure content will be added here -->
+                  </div>
+                </div>
+              </mat-expansion-panel>
+
+              <!-- Vendors and Stalls Section -->
+              <mat-expansion-panel class="optional-panel">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Vendors and stalls</mat-panel-title>
+                  <mat-icon>expand_more</mat-icon>
+                </mat-expansion-panel-header>
+                <div class="panel-content" formGroupName="vendorsStalls">
+                  <div class="vendors-section">
+                    <p>Vendor and stall requirements for your event.</p>
+                    <!-- Vendors content will be added here -->
+                  </div>
+                </div>
+              </mat-expansion-panel>
+
+              <!-- Safety & Emergency Section -->
+              <mat-expansion-panel class="optional-panel">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Safety & Emergency</mat-panel-title>
+                  <mat-icon>expand_more</mat-icon>
+                </mat-expansion-panel-header>
+                <div class="panel-content" formGroupName="safety">
+                  <div class="safety-section">
+                    <p>Safety and emergency requirements for your event.</p>
+                    <!-- Safety content will be added here -->
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </div>
+          </mat-tab>
+
+        </mat-tab-group>
+      </form>
+    </mat-card>
+  </div>
+</div>

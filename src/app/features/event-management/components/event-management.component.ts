@@ -8,11 +8,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { Event } from '../models/event.models';
 import { EventManagementService } from '../services/event-management.service';
-import { AddEditEventDialogComponent } from '../dialogs/add-edit-event-dialog/add-edit-event-dialog.component';
 import { DeleteEventDialogComponent } from '../dialogs/delete-event-dialog/delete-event-dialog.component';
 
 @Component({
@@ -38,7 +38,8 @@ export class EventManagementComponent implements OnInit, OnDestroy {
   constructor(
     private eventService: EventManagementService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +56,7 @@ export class EventManagementComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (events) => {
-          this.events = events;
+          this.events = events.items;
         },
         error: (error) => {
           console.error('Error loading events:', error);
@@ -88,66 +89,15 @@ export class EventManagementComponent implements OnInit, OnDestroy {
   }
 
   addEvent(): void {
-    const dialogRef = this.dialog.open(AddEditEventDialogComponent, {
-      width: '1200px',
-      maxWidth: '95vw',
-      maxHeight: '90vh',
-      data: { event: null, isEdit: false }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.eventService.createEvent(result)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe({
-            next: (response) => {
-              if (response.success) {
-                this.snackBar.open('Event created successfully', 'Close', { duration: 3000 });
-                this.loadEvents();
-              } else {
-                this.snackBar.open(response.message || 'Error creating event', 'Close', { duration: 3000 });
-              }
-            },
-            error: (error) => {
-              console.error('Error creating event:', error);
-              this.snackBar.open('Error creating event', 'Close', { duration: 3000 });
-            }
-          });
-      }
-    });
+    this.router.navigate(['/events/add']);
   }
 
   editEvent(event: Event): void {
-    const dialogRef = this.dialog.open(AddEditEventDialogComponent, {
-      width: '1200px',
-      maxWidth: '95vw',
-      maxHeight: '90vh',
-      data: { event, isEdit: true }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.eventService.updateEvent(event.id, result)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe({
-            next: (response) => {
-              if (response.success) {
-                this.snackBar.open('Event updated successfully', 'Close', { duration: 3000 });
-                this.loadEvents();
-              } else {
-                this.snackBar.open(response.message || 'Error updating event', 'Close', { duration: 3000 });
-              }
-            },
-            error: (error) => {
-              console.error('Error updating event:', error);
-              this.snackBar.open('Error updating event', 'Close', { duration: 3000 });
-            }
-          });
-      }
-    });
+    this.router.navigate(['/events/edit', event._id]);
   }
 
   deleteEvent(event: Event): void {
+
     const dialogRef = this.dialog.open(DeleteEventDialogComponent, {
       width: '400px',
       data: { event }
@@ -155,7 +105,7 @@ export class EventManagementComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.eventService.deleteEvent(event.id)
+        this.eventService.deleteEvent(event._id)
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: (response) => {

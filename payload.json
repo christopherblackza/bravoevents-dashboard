@@ -1,0 +1,590 @@
+{
+  "userId": "68e9547f4910219201aeb1c1",
+  "eventTypeId": "68bfff56cbfe014872de5924",
+  "date": "2025-11-05",
+  "startTime": "08:45",
+  "expectedPeople": 1000,
+  "endTime": "14:45",
+  "city": "Mexico City",
+  "eventDescription": "Testing Event Description",
+  "eventImageUrls": [
+    "https://bravoevents-assets.s3.eu-west-1.amazonaws.com/profile-pictures/68e9547f4910219201aeb1c1/1762354072519-ffd03168-df56-4bc2-9249-9486bb4cebb0.png",
+    "https://bravoevents-assets.s3.eu-west-1.amazonaws.com/profile-pictures/68e9547f4910219201aeb1c1/1762354078737-43b84b5b-b778-4003-8ccf-4aefe2651833.png",
+    "https://bravoevents-assets.s3.eu-west-1.amazonaws.com/profile-pictures/68e9547f4910219201aeb1c1/1762354088136-f1cdd79c-142b-4c64-aa8f-8af15309211b.png"
+  ],
+  "eventLogo": "https://bravoevents-assets.s3.eu-west-1.amazonaws.com/profile-pictures/68e9547f4910219201aeb1c1/1762354068573-4672b172-1637-424f-9614-f5b6f5fb80d6.png",
+  "venueServiceId": "68c2b5c579f93bcde86fa460",
+  "isEventVenue": false,
+  "requestTickets": true,
+  "title": "Test",
+  "seatingArrangement": {
+    "isSeatedEvent": false,
+    "isOpenAirEvent": true,
+    "isPlotTentsEvent": false,
+    "openAirEventDetails": {
+      "openAirCapacity": 0,
+      "ticketPrice": 0
+    }
+  },
+  "vendorsStalls": {
+    "stalls": {
+      "food": {
+        "vendor": false,
+        "numberOfStalls": "10",
+        "pricePerStall": "5",
+        "entertainmentRequired": true,
+        "squareMetersAvailable": "100",
+        "setupDate": "2025-11-12",
+        "setupTime": "13:52",
+        "strikeDate": "2025-11-20",
+        "strikeTime": "11:48"
+      },
+      "accessories": {
+        "vendor": false,
+        "numberOfStalls": "15",
+        "pricePerStall": "10",
+        "entertainmentRequired": false,
+        "squareMetersAvailable": 0
+      },
+      "artsAndCrafts": {
+        "vendor": true,
+        "vendorName": "Arts & Crafts Vendor name",
+        "numberOfStalls": 0,
+        "pricePerStall": 0,
+        "entertainmentRequired": true,
+        "squareMetersAvailable": 0
+      },
+      "vape": {
+        "vendor": true,
+        "vendorName": "Vape Vendor Name",
+        "numberOfStalls": 0,
+        "pricePerStall": 0,
+        "entertainmentRequired": true,
+        "squareMetersAvailable": 0
+      }
+    },
+    "catering": {
+      "vendor": true,
+      "vendorName": "Test Vendor name Catering",
+      "items": [
+        {}
+      ]
+    }
+  },
+  "eventVenue": "",
+  "eventTypes": [
+    "Open Air Event"
+  ],
+  "adminFee": 500,
+  "servicePrice": 150,
+  "infrastructure": {
+    "fencing": {
+      "mainCategoryId": "",
+      "subCategoryId": "",
+      "vendor": true,
+      "vendorName": "",
+      "setupDate": "",
+      "setupTime": "",
+      "strikeDate": "",
+      "strikeTime": "",
+      "items": [
+        {
+          "meters": 0,
+          "height": ""
+        }
+      ]
+    },
+    "scaffolding": {
+      "mainCategoryId": "",
+      "subCategoryId": "",
+      "vendor": true,
+      "vendorName": "",
+      "setupDate": "",
+      "setupTime": "",
+      "strikeDate": "",
+      "strikeTime": "",
+      "items": [
+        {
+          "meters": 0,
+          "height": ""
+        }
+      ]
+    },
+    "electricity": {
+      "generator": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "numberOfGenerators": 0,
+        "kvaGenerator1": "",
+        "setupDate": "",
+        "setupTime": "",
+        "returnDate": "",
+        "returnTime": ""
+      },
+      "electrician": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "description": "",
+        "scheduleDate": "",
+        "fileUrl": ""
+      }
+    },
+    "seatingAndTables": {
+      "mainCategoryId": "",
+      "subCategoryId": "",
+      "vendor": true,
+      "vendorName": "",
+      "chairs": 0,
+      "chairsDimensions": "",
+      "tables": 0,
+      "tablesDimensions": "",
+      "sofas": 0,
+      "sofasDimensions": "",
+      "highChairs": 0,
+      "highChairsDimensions": "",
+      "highTables": 0,
+      "highTablesDimensions": "",
+      "additionalEquipmentName": "",
+      "additionalEquipmentQuantity": 0,
+      "setupDate": "",
+      "setupTime": "",
+      "returnDate": "",
+      "returnTime": ""
+    },
+    "stageLightingSoundScreens": {
+      "stage": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "stageDimensions": "",
+        "setupDate": "",
+        "setupTime": "",
+        "strikeDate": "",
+        "strikeTime": ""
+      },
+      "lighting": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "type": "",
+        "setupDate": "",
+        "setupTime": "",
+        "strikeDate": "",
+        "strikeTime": ""
+      },
+      "sound": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "type": "",
+        "setupDate": "",
+        "setupTime": "",
+        "strikeDate": "",
+        "strikeTime": "",
+        "additionalRequirement": ""
+      },
+      "screens": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "backSideDimensions": "",
+        "leftSideDimensions": "",
+        "rightSideDimensions": "",
+        "bothSidesDimensions": "",
+        "additionalRequirement": ""
+      }
+    },
+    "layout": {
+      "mainCategoryId": "",
+      "subCategoryId": "",
+      "vendor": true,
+      "vendorName": "",
+      "aerialPhotosSurveyor": true,
+      "imageUrl": "",
+      "mapType": true,
+      "dateRequired": "",
+      "dateReturned": ""
+    }
+  },
+  "sanitation": {
+    "toiletsAndShowers": {
+      "toilets": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "venueHas": 0,
+        "recommended": 0,
+        "additionalToilets": 0,
+        "additionalNotes": "",
+        "amountOfPlasticUnits": 0,
+        "amountOfTrailorUnits": 0,
+        "amountOfUrinialUnits": 0,
+        "amountOfVIPUnits": 0,
+        "amountOfHandwashStations": 0
+      },
+      "showers": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "venueHas": 0,
+        "recommended": 0,
+        "additionalShowers": 0,
+        "amountOfIndividualShowers": 0,
+        "amountOfTrailorShowers": 0,
+        "amountOfVIPShowers": 0
+      }
+    },
+    "wasteAndCleaning": {
+      "wasteManagement": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "planFileUrl": "",
+        "skipsAvailable": 0,
+        "binsAvailable": 0
+      },
+      "cleaners": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "planFileUrl": "",
+        "amountAvailable": 0
+      }
+    }
+  },
+  "safety": {
+    "security": {
+      "mainCategoryId": "",
+      "subCategoryId": "",
+      "vendor": true,
+      "vendorName": "",
+      "squareMetersToPatroll": 0,
+      "entranceBarricadeAmount": 0,
+      "parkingAreaManage": "",
+      "parkingAreaStartDate": "",
+      "parkingAreaEndDate": "",
+      "parkingAreaStartTime": "",
+      "parkingAreaEndTime": "",
+      "additionalInfo": "",
+      "planFileUrl": ""
+    },
+    "healthAndSafety": {
+      "mainCategoryId": "",
+      "subCategoryId": "",
+      "vendor": true,
+      "vendorName": "",
+      "planFileUrl": "",
+      "riskAssessmentRequired": true
+    },
+    "medicalServices": {
+      "mainCategoryId": "",
+      "subCategoryId": "",
+      "vendor": true,
+      "vendorName": "",
+      "planFileUrl": "",
+      "approvalFileUrl": "",
+      "parkingAreaStartDate": "",
+      "parkingAreaEndDate": "",
+      "parkingAreaStartTime": "",
+      "parkingAreaEndTime": "",
+      "additionalInfo": ""
+    },
+    "fireFighting": {
+      "mainCategoryId": "",
+      "subCategoryId": "",
+      "vendor": true,
+      "vendorName": "",
+      "planFileUrl": "",
+      "parkingAreaStartDate": "",
+      "parkingAreaEndDate": "",
+      "parkingAreaStartTime": "",
+      "parkingAreaEndTime": "",
+      "additionalInfo": ""
+    }
+  },
+  "camping": {
+    "campingGlamping": {
+      "mainCategoryId": "",
+      "subCategoryId": "",
+      "vendor": true,
+      "vendorName": "",
+      "tentsAmount": 0,
+      "campingDimensions": "",
+      "campingPersonPerTent": 0,
+      "glampingAmount": 0,
+      "glampingDimensions": "",
+      "glampingPersonPerTent": 0,
+      "campingAdditionalFacilities": ""
+    }
+  },
+  "brandingPromotionDto": {
+    "printingAndBranding": {
+      "minCategoryId": "",
+      "subCategoryId": "",
+      "vendor": true,
+      "vendorName": "",
+      "printingAndBranding": [
+        {
+          "listBranding": "",
+          "printOptions": "",
+          "brandingSize": "",
+          "brandingFileUrl": "",
+          "materialOptions": "",
+          "color": ""
+        }
+      ]
+    },
+    "mediaAndSocialMedia": {
+      "mainCategoryId": "",
+      "subCategoryId": "",
+      "socialMedia": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "socialMedia": [
+          {
+            "imageUrl": "",
+            "description": ""
+          }
+        ]
+      },
+      "socialMediaInfluencers": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "influencer": true,
+        "influencerName": [
+          {
+            "value": ""
+          }
+        ],
+        "description": "",
+        "adsRequested": 0,
+        "startDate": "",
+        "endDate": "",
+        "packageIncluded": true,
+        "packageDescription": ""
+      },
+      "radio": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "slotsRequested": [
+          {
+            "startDate": "",
+            "startTime": ""
+          }
+        ],
+        "socialMediaRequest": true,
+        "imageUrl": "",
+        "description": ""
+      },
+      "tv": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "budgetAllowed": 0,
+        "startTime": "",
+        "endTime": ""
+      },
+      "printedMedia": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "imageUrl": "",
+        "amountOfAds": 0,
+        "numberOfTimes": 0,
+        "startTime": "",
+        "endTime": ""
+      }
+    },
+    "entertainment": {
+      "mainCategoryId": "",
+      "subCategoryId": "",
+      "vendor": true,
+      "vendorName": "",
+      "backstageDancers": "",
+      "dj": "",
+      "comedian": "",
+      "mc": "",
+      "influencers": "",
+      "singer": "",
+      "stageManager": "",
+      "singersWishlist": ""
+    }
+  },
+  "accreditationEntryDto": {
+    "wristBands": {
+      "minCategoryId": "",
+      "subCategoryId": "",
+      "leafCategoryId": "",
+      "vendor": true,
+      "wristBands": [
+        {
+          "color": "",
+          "amount": 0
+        }
+      ]
+    },
+    "stamps": {
+      "minCategoryId": "",
+      "subCategoryId": "",
+      "leafCategoryId": "",
+      "vendor": true,
+      "stamps": [
+        {
+          "description": "",
+          "amount": 0
+        }
+      ]
+    }
+  },
+  "beveragesBarServices": {
+    "cooldrinksAndAlcoholServices": {
+      "mainCategoryId": "",
+      "subCategoryId": "",
+      "cooldrinks": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "amountOfStations": 0
+      },
+      "liquorLicense": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "submitted": true,
+        "submissionDate": "",
+        "fileUrl": ""
+      },
+      "bar": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "amountNeeded": 0,
+        "dimensions": "",
+        "vipAmount": 0,
+        "vipDimensions": "",
+        "backstageAmount": 0,
+        "backstageDimensions": "",
+        "quotesRequested": true,
+        "setupDate": "",
+        "setupTime": "",
+        "strikeDate": "",
+        "strikeTime": ""
+      },
+      "cellars": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "amountPerStall": 0,
+        "stallIncludes": "",
+        "setupDate": "",
+        "setupTime": "",
+        "strikeDate": "",
+        "strikeTime": ""
+      },
+      "breweries": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "amountPerStall": 0,
+        "stallIncludes": "",
+        "setupDate": "",
+        "setupTime": "",
+        "strikeDate": "",
+        "strikeTime": ""
+      }
+    }
+  },
+  "staffingSupportDto": {
+    "mainCategoryId": "",
+    "staff": {
+      "vendor": true,
+      "vendorName": "",
+      "subCategoryId": "",
+      "staff": [
+        {
+          "staffType": "",
+          "amount": 0
+        }
+      ]
+    }
+  },
+  "permissions": {
+    "eventApplication": {
+      "submitted": true,
+      "submissionDate": "",
+      "approvalDate": ""
+    },
+    "trafficApplication": {
+      "required": true,
+      "submissionIn": true,
+      "streets": "",
+      "closingDate": "",
+      "submissionDate": "",
+      "mainCategoryId": "",
+      "subCategoryId": ""
+    },
+    "noiseExemption": {
+      "required": true,
+      "submissionDate": "",
+      "mainCategoryId": "",
+      "subCategoryId": ""
+    },
+    "construction": {
+      "required": true,
+      "submissionDate": "",
+      "hasVendor": true,
+      "vendorName": "",
+      "numberOfPeople": 0,
+      "numberOfTents": 0,
+      "tentDimensions1": "",
+      "tentDimensions2": "",
+      "tentSetupDate": "",
+      "tentSetupTime": "",
+      "tentStrikeDownDate": "",
+      "tentStrikeDownTime": "",
+      "mainCategoryId": "",
+      "subCategoryId": ""
+    }
+  },
+  "returnUrl": "https://bravo-events-fe.vercel.app/create-event/success",
+  "cancelUrl": "https://bravo-events-fe.vercel.app/create-event/failed"
+}
