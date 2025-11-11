@@ -1,0 +1,190 @@
+<div class="payment-management">
+  <div class="header">
+    <h1>Payment Management</h1>
+    <div class="header-actions">
+      <button mat-raised-button color="primary" (click)="exportTransactions()">
+        <mat-icon>download</mat-icon>
+        Export
+      </button>
+    </div>
+  </div>
+
+  <!-- Statistics Cards -->
+  <div class="stats-grid">
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <mat-card-title>Total Transactions</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-value">{{paymentStats.totalTransactions}}</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <mat-card-title>Total Revenue</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-value">{{formatCurrency(paymentStats.totalRevenue, paymentStats.currency)}}</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <mat-card-title>Total Fees</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-value">{{formatCurrency(paymentStats.totalFees, paymentStats.currency)}}</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <mat-card-title>Net Amount</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-value">{{formatCurrency(paymentStats.totalNet, paymentStats.currency)}}</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Search and Filters -->
+  <div class="filters">
+    <div class="period-filters">
+      <mat-form-field appearance="outline" class="period-field">
+        <mat-label>Period</mat-label>
+        <mat-select [formControl]="periodControl">
+          <mat-option *ngFor="let option of periodOptions" [value]="option.value">
+            {{option.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="date-field">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="picker" [formControl]="dateControl" 
+               [placeholder]="getDatePlaceholder()">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search transactions</mat-label>
+      <input matInput [formControl]="searchControl" placeholder="Search by name, party, or type...">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <button mat-button (click)="clearSearch()" *ngIf="isSearching">
+      <mat-icon>clear</mat-icon>
+      Clear Search
+    </button>
+  </div>
+
+  <!-- Transactions Table -->
+  <div class="table-container" *ngIf="!isLoading; else loading">
+    <table mat-table [dataSource]="getPaginatedTransactions()" class="transactions-table">
+      
+      <!-- Date Column -->
+      <ng-container matColumnDef="Date">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let transaction">{{formatDate(transaction.Date)}}</td>
+      </ng-container>
+
+      <!-- Type Column -->
+      <ng-container matColumnDef="Type">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let transaction">
+          <mat-chip [color]="getTypeColor(transaction.Type)" selected>
+            {{transaction.Type}}
+          </mat-chip>
+        </td>
+      </ng-container>
+
+      <!-- Party Column -->
+      <ng-container matColumnDef="Party">
+        <th mat-header-cell *matHeaderCellDef>Party</th>
+        <td mat-cell *matCellDef="let transaction">{{transaction.Party}}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let transaction">{{transaction.Name}}</td>
+      </ng-container>
+
+      <!-- Gross Column -->
+      <ng-container matColumnDef="Gross">
+        <th mat-header-cell *matHeaderCellDef>Gross</th>
+        <td mat-cell *matCellDef="let transaction">
+          <span [class.credit]="transaction.Sign === 'CREDIT'" [class.debit]="transaction.Sign === 'DEBIT'">
+            {{formatCurrency(transaction.Gross, transaction.Currency)}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Fee Column -->
+      <ng-container matColumnDef="Fee">
+        <th mat-header-cell *matHeaderCellDef>Fee</th>
+        <td mat-cell *matCellDef="let transaction">
+          {{formatCurrency(transaction.Fee, transaction.Currency)}}
+        </td>
+      </ng-container>
+
+      <!-- Net Column -->
+      <ng-container matColumnDef="Net">
+        <th mat-header-cell *matHeaderCellDef>Net</th>
+        <td mat-cell *matCellDef="let transaction">
+          <span [class.credit]="transaction.Net > 0" [class.debit]="transaction.Net < 0">
+            {{formatCurrency(transaction.Net, transaction.Currency)}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Currency Column -->
+      <ng-container matColumnDef="Currency">
+        <th mat-header-cell *matHeaderCellDef>Currency</th>
+        <td mat-cell *matCellDef="let transaction">{{transaction.Currency}}</td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let transaction">
+          <button mat-icon-button color="primary" (click)="viewTransactionDetails(transaction)">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <!-- Pagination -->
+    <mat-paginator
+      [length]="totalTransactions"
+      [pageSize]="pageSize"
+      [pageIndex]="currentPage"
+      [pageSizeOptions]="[5, 10, 25, 50]"
+      (page)="onPageChange($event)"
+      aria-label="Select page of transactions">
+    </mat-paginator>
+  </div>
+
+  <!-- Loading State -->
+  <ng-template #loading>
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading payment transactions...</p>
+    </div>
+  </ng-template>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && filteredTransactions.length === 0">
+    <mat-icon class="empty-icon">payments</mat-icon>
+    <h3>No transactions found</h3>
+    <p *ngIf="isSearching">Try adjusting your search criteria</p>
+    <p *ngIf="!isSearching">No payment transactions available</p>
+  </div>
+</div>

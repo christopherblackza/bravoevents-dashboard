@@ -114,41 +114,51 @@ export interface Safety {
 export interface Camping {
   campingGlamping: {
     vendor: boolean;
+    vendorName: string;
+    campingTents?: number;
+    personsPerTent?: number;
+    campingDimensions?: string;
+    glampingTents?: number;
+    glampingPersonsPerTent?: number;
+    glampingDimensions?: string;
+    additionalEquipment?: string;
   };
 }
 
+export interface Stall {
+  hasVendor: boolean;
+  vendorName?: string;
+  amount?: number;
+  pricePerStall?: number;
+  hasKidsEntertainment?: boolean;
+  squareMeters?: number;
+  setupDate?: Date;
+  setupTime?: string;
+  strikeDownDate?: Date;
+  strikeDownTime?: string;
+}
+
+export interface CateringItem {
+  description: string;
+  area: string;
+}
+
+export interface Catering {
+  hasVendor: boolean;
+  vendorName?: string;
+  items?: CateringItem[];
+  setupDate?: Date;
+  setupTime?: string;
+  strikeDownDate?: Date;
+  strikeDownTime?: string;
+}
+
 export interface VendorsStalls {
-  ticketingAndSales: {
-    mainCategoryId?: string;
-    subCategoryId?: string;
-    vendor: boolean;
-    tickets: TicketInfo[];
-  };
-  stalls: {
-    vendors: {
-      mainCategoryId?: string;
-      subCategoryId?: string;
-      leafCategoryId?: string;
-      vendor: boolean;
-      amountFood?: string;
-      pricePerStall?: string;
-      accessoriesAmount?: string;
-      accessoriesPrice?: string;
-      artsCraftsAmount?: string;
-      artsCraftsPrice?: string;
-      vapeAmount?: string;
-      vapePrice?: string;
-      entertainmentRequired?: boolean;
-      required?: boolean;
-    };
-    catering: {
-      mainCategoryId?: string;
-      subCategoryId?: string;
-      leafCategoryId?: string;
-      vendor: boolean;
-      vendorName?: string;
-    };
-  };
+  foodStalls: Stall;
+  accessoriesStalls: Stall;
+  artsAndCraftsStalls: Stall;
+  vapeStalls: Stall;
+  catering: Catering;
 }
 
 export interface BeveragesBarServices {
@@ -203,9 +213,16 @@ export interface AccreditationEntry {
   };
 }
 
+export interface StaffMember {
+  type: string;
+  amount: number;
+}
+
 export interface StaffingSupport {
   staff: {
     vendor: boolean;
+    vendorName?: string;
+    members?: StaffMember[];
   };
 }
 
@@ -215,6 +232,11 @@ export interface SeatingArrangement {
   plotsForTents: boolean;
 }
 
+export interface EventType {
+  _id: string;
+  label: string;
+}
+
 export interface Event {
   _id: string;
   userId: string;
@@ -222,15 +244,17 @@ export interface Event {
   date: Date;
   startTime: string;
   endTime: string;
-  typeOfEvent?: string;
-  amountOfPeopleExpected?: number;
+  eventTypeId?: EventType;
+  expectedPeople?: number;
   city?: string;
   eventLogo?: string;
   requestTickets: boolean;
+  ticketLink?: string;
   isEventVenue: boolean;
   eventVenue?: string;
   eventImageUrls: string[];
   eventDescription: string;
+  paymentStatus: string;
   permissions: Permissions;
   infrastructure: Infrastructure;
   decoration: Decoration;
@@ -254,7 +278,7 @@ export interface CreateEventRequest {
   startTime: string;
   endTime: string;
   typeOfEvent?: string;
-  amountOfPeopleExpected?: number;
+  expectedPeople?: number;
   city?: string;
   eventLogo?: string;
   requestTickets: boolean;

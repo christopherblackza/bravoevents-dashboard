@@ -15,14 +15,24 @@ import { EventsResponse } from '../models/events-response';
   providedIn: 'root'
 })
 export class EventManagementService {
-  private eventsSubject = new BehaviorSubject<Event[]>(this.getDummyEvents());
+  private eventsSubject = new BehaviorSubject<Event[]>([]);
   public events$ = this.eventsSubject.asObservable();
 
     private readonly ADMIN_URL = environment.apiUrl + '/superadmin';
+    private readonly baseUrl = 'http://localhost:4000/v2/api/event';
 
   constructor(
     private http: HttpClient,
-  ) {}
+  ) {
+    this.loadEvents();
+  }
+
+  private loadEvents(): void {
+    this.getAllEvents().subscribe(response => {
+      console.error('RESPONSE', response);
+      this.eventsSubject.next(response.items);
+    });
+  }
 
   getAllEvents(): Observable<EventsResponse> {
     return this.http.get<EventsResponse>(`${this.ADMIN_URL}/events`);
@@ -41,42 +51,21 @@ export class EventManagementService {
   }
 
   // Get event by ID
-  getEventById(id: string): Observable<Event | null> {
-    return this.events$.pipe(
-      delay(300),
-      map(events => events.find(event => event._id === id) || null)
-    );
+  getEventById(id: string): Observable<Event> {
+    return this.http.get<Event>(`${this.ADMIN_URL}/events/${id}/normalised`);
   }
+
+
 
   // Create new event
   createEvent(eventData: CreateEventRequest): Observable<EventResponse> {
-    return of(null).pipe(
-      delay(800),
-      map(() => {
-        const newEvent: Event = {
-          _id: this.generateId(),
-          followers: [],
-          ...eventData
-        };
-
-        const currentEvents = this.eventsSubject.value;
-        const updatedEvents = [...currentEvents, newEvent];
-        this.eventsSubject.next(updatedEvents);
-
-        return {
-          success: true,
-          data: newEvent,
-          message: 'Event created successfully'
-        };
-      })
-    );
+    return this.http.post<EventResponse>(`${this.baseUrl}/create`, eventData);
   }
 
   // Create event from static payload.json (development helper)
   createEventFromPayload(): Observable<any> {
-    const url = 'http://localhost:4000/v2/api/event/create';
     return this.http.get<any>('assets/payload.json').pipe(
-      switchMap(payload => this.http.post<any>(url, payload))
+      switchMap(payload => this.http.post<any>(`${this.baseUrl}/create`, payload))
     );
   }
 
@@ -87,94 +76,17 @@ export class EventManagementService {
 
   // Create event using a provided payload object
   createEventWithPayload(payload: any): Observable<any> {
-    const url = 'http://localhost:4000/v2/api/event/create';
-    return this.http.post<any>(url, payload);
+    return this.http.post<any>(`${this.baseUrl}/create`, payload);
   }
 
   // Update existing event
   updateEvent(id: string, eventData: UpdateEventRequest): Observable<EventResponse> {
-    return of(null).pipe(
-      delay(800),
-      map(() => {
-        const currentEvents = this.eventsSubject.value;
-        const eventIndex = currentEvents.findIndex(event => event._id === id);
-
-        if (eventIndex === -1) {
-          return {
-            success: false,
-            data: null,
-            message: 'Event not found'
-          };
-        }
-
-        const updatedEvent: Event = {
-          ...currentEvents[eventIndex],
-          ...eventData
-        };
-
-        const updatedEvents = [...currentEvents];
-        updatedEvents[eventIndex] = updatedEvent;
-        this.eventsSubject.next(updatedEvents);
-
-        return {
-          success: true,
-          data: updatedEvent,
-          message: 'Event updated successfully'
-        };
-      })
-    );
+    return this.http.put<EventResponse>(`${this.baseUrl}/update/${id}`, eventData);
   }
 
   // Delete event
   deleteEvent(id: string): Observable<any> {
-    const url = `${this.ADMIN_URL}/event/${id}`;
+    const url = `${this.ADMIN_URL}/events/${id}`;
     return this.http.delete<any>(url);
-  }
-
-  private generateId(): string {
-    return Math.random().toString(36).substr(2, 9);
-  }
-
-  private getDummyEvents(): Event[] {
-    return [
-      {
-        _id: '1',
-        userId: 'user123',
-        title: 'Annual Tech Conference 2024',
-        eventDescription: 'Test',
-        eventImageUrls: [],
-        date: new Date('2024-06-15'),
-        startTime: '09:00',
-        endTime: '17:00',
-        followers: [],
-        permissions: {
-          eventApplication: { submitted: false},
-          trafficApplication: { required: false, submissionIn: false},
-          noiseExemption: { required: false},
-          construction: { required: false, hasVendor: false}
-        },
-        infrastructure: {
-          fencing: { vendor: false},
-          scaffolding: { vendor: false},
-          electricity: { generator: { vendor: true}, electrician: { vendor: true}},
-          seatingAndTables: { vendor: true},
-          stageLightingSoundScreens: {
-            stage: { vendor: true},
-            lighting: { vendor: true},
-            sound: { vendor: true},
-            screens: { vendor: true}
-          }
-        },
-        requestTickets: false,
-        isEventVenue: false,
-        decoration: {
-          decor: { vendor: true},
-          lighting:  { vendor: true},
-          layout:  { vendor: true},
-          internet:  { vendor: true},
-          entertainment:  { vendor: true}
-        }
-      }
-    ];
   }
 }

@@ -1,0 +1,170 @@
+<div class="bids-edit-container">
+  <!-- Header with Back Button -->
+  <div class="header">
+    <button mat-icon-button (click)="goBack()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>Bid Details</h1>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="isLoading">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Loading bid details...</p>
+  </div>
+
+  <!-- Bid Details Card -->
+  <div class="bid-details" *ngIf="bid && !isLoading">
+    <mat-card class="details-card">
+      <mat-card-header>
+        <mat-card-title>Bid Information</mat-card-title>
+        <mat-card-subtitle>ID: {{bid._id}}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <!-- Basic Information -->
+        <div class="info-section">
+          <h3>Basic Information</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Event ID:</span>
+              <span class="value">{{bid.eventId}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Vendor ID:</span>
+              <span class="value">{{bid.vendorId}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Status:</span>
+              <span class="value">
+                <mat-chip [color]="getStatusColor(bid.status)" selected>
+                  {{bid.status | titlecase}}
+                </mat-chip>
+              </span>
+            </div>
+            <div class="info-item">
+              <span class="label">Bid Type:</span>
+              <span class="value">
+                <mat-chip [color]="getBidTypeColor(bid.bidType)" selected>
+                  {{bid.bidType | titlecase}}
+                </mat-chip>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Financial Information -->
+        <div class="info-section">
+          <h3>Financial Information</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Price:</span>
+              <span class="value">{{formatCurrency(bid.price)}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Payment Status:</span>
+              <span class="value">
+                <mat-chip [color]="getPaymentStatusColor(bid.payment_status)" selected>
+                  {{bid.payment_status | titlecase}}
+                </mat-chip>
+              </span>
+            </div>
+            <div class="info-item">
+              <span class="label">Rating:</span>
+              <span class="value">
+                <span *ngIf="bid.rating !== null; else noRating">
+                  {{bid.rating}}/5
+                </span>
+                <ng-template #noRating>
+                  <span class="muted">N/A</span>
+                </ng-template>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Timestamps -->
+        <div class="info-section">
+          <h3>Timestamps</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Created:</span>
+              <span class="value">{{formatDate(bid.createdAt)}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Updated:</span>
+              <span class="value">{{formatDate(bid.updatedAt)}}</span>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Status Actions -->
+        <div class="actions-section">
+          <h3>Update Status</h3>
+          <div class="action-buttons">
+            <button 
+              mat-raised-button 
+              color="accent" 
+              (click)="updateBidStatus('accepted')"
+              [disabled]="bid.status === 'accepted' || isUpdating"
+              class="action-button">
+              <mat-icon>check_circle</mat-icon>
+              Accept
+            </button>
+            
+            <button 
+              mat-raised-button 
+              color="warn" 
+              (click)="updateBidStatus('rejected')"
+              [disabled]="bid.status === 'rejected' || isUpdating"
+              class="action-button">
+              <mat-icon>cancel</mat-icon>
+              Reject
+            </button>
+
+            <button 
+              mat-raised-button 
+              color="success" 
+              (click)="updateBidStatus('completed')"
+              [disabled]="bid.status === 'completed' || isUpdating"
+              class="action-button">
+              <mat-icon>verified</mat-icon>
+              Complete
+            </button>
+
+            <button 
+              mat-raised-button 
+              color="primary" 
+              (click)="updateBidStatus('pending')"
+              [disabled]="bid.status === 'pending' || isUpdating"
+              class="action-button">
+              <mat-icon>schedule</mat-icon>
+              Set to Pending
+            </button>
+          </div>
+          
+          <div class="updating-state" *ngIf="isUpdating">
+            <mat-spinner diameter="20"></mat-spinner>
+            <span>Updating status...</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="!bid && !isLoading">
+    <mat-icon>error_outline</mat-icon>
+    <h3>Bid not found</h3>
+    <p>The requested bid could not be found.</p>
+    <button mat-raised-button color="primary" (click)="goBack()">
+      Back to Bids Management
+    </button>
+  </div>
+</div>

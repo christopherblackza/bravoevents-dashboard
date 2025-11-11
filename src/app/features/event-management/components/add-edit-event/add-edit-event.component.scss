@@ -68,6 +68,7 @@
 .form-row {
   display: flex;
   gap: 16px;
+  margin-top: 16px;
   margin-bottom: 16px;
   
   .half-width {
@@ -199,6 +200,10 @@
     margin: 0 0 12px 0;
     color: #666;
   }
+}
+
+.vendor-input {
+  margin-top: 16px;
 }
 
 .vendor-input {

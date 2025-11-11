@@ -27,6 +27,14 @@ export const routes: Routes = [
         loadChildren: () => import('./features/event-management/event-management.routes').then(m => m.routes)
       },
       {
+        path: 'payments',
+        loadChildren: () => import('./features/payment-management/payment-management.routes').then(m => m.PAYMENT_MANAGEMENT_ROUTES)
+      },
+      {
+        path: 'bids',
+        loadChildren: () => import('./features/bids-management/bids-management.routes').then(m => m.BIDS_MANAGEMENT_ROUTES)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'

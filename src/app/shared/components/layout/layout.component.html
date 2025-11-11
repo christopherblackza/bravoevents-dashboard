@@ -1,4 +1,4 @@
-  <mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container">
       <mat-sidenav #drawer class="sidenav" fixedInViewport mode="side" opened>
         <mat-toolbar class="sidenav-header">
           <span>Bravo Events</span>
@@ -23,6 +23,16 @@
           <a mat-list-item routerLink="/events" routerLinkActive="active">
             <mat-icon matListItemIcon>event</mat-icon>
             <span matListItemTitle>Event Management</span>
+          </a>
+
+          <a mat-list-item routerLink="/payments" routerLinkActive="active">
+            <mat-icon matListItemIcon>payment</mat-icon>
+            <span matListItemTitle>Payment Management</span>
+          </a>
+
+          <a mat-list-item routerLink="/bids" routerLinkActive="active">
+            <mat-icon matListItemIcon>assignment</mat-icon>
+            <span matListItemTitle>Bids Management</span>
           </a>
           
        

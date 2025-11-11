@@ -1,82 +1,31 @@
 {
-  "userId": "68e9547f4910219201aeb1c1",
-  "eventTypeId": "68bfff56cbfe014872de5924",
-  "date": "2025-11-05",
-  "startTime": "08:45",
-  "expectedPeople": 1000,
-  "endTime": "14:45",
-  "city": "Mexico City",
-  "eventDescription": "Testing Event Description",
+  "userId": "68ff72e5e682bed29e18894c",
+  "endTime": "20:00",
   "eventImageUrls": [
-    "https://bravoevents-assets.s3.eu-west-1.amazonaws.com/profile-pictures/68e9547f4910219201aeb1c1/1762354072519-ffd03168-df56-4bc2-9249-9486bb4cebb0.png",
-    "https://bravoevents-assets.s3.eu-west-1.amazonaws.com/profile-pictures/68e9547f4910219201aeb1c1/1762354078737-43b84b5b-b778-4003-8ccf-4aefe2651833.png",
-    "https://bravoevents-assets.s3.eu-west-1.amazonaws.com/profile-pictures/68e9547f4910219201aeb1c1/1762354088136-f1cdd79c-142b-4c64-aa8f-8af15309211b.png"
+    "https://bravoevents-assets.s3.eu-west-1.amazonaws.com/profile-pictures/68ff72e5e682bed29e18894c/1762806152397-8f178531-f362-4b60-8520-d5270c55b261.jpeg",
+    "https://bravoevents-assets.s3.eu-west-1.amazonaws.com/profile-pictures/68ff72e5e682bed29e18894c/1762806152399-6dac13ba-fa2e-429b-b267-2c34d1ee3a9f.jpeg",
+    "https://bravoevents-assets.s3.eu-west-1.amazonaws.com/profile-pictures/68ff72e5e682bed29e18894c/1762806152400-cc4e0f40-6dd0-46b3-87e1-794ca526c46b.jpeg"
   ],
-  "eventLogo": "https://bravoevents-assets.s3.eu-west-1.amazonaws.com/profile-pictures/68e9547f4910219201aeb1c1/1762354068573-4672b172-1637-424f-9614-f5b6f5fb80d6.png",
-  "venueServiceId": "68c2b5c579f93bcde86fa460",
-  "isEventVenue": false,
-  "requestTickets": true,
-  "title": "Test",
+  "venueServiceId": "",
+  "isEventVenue": true,
+  "requestTickets": false,
+  "eventTypes": [],
+  "date": "2025-12-06",
+  "eventTypeId": "68bfff56cbfe014872de5924",
+  "expectedPeople": 5000,
+  "startTime": "10:00",
+  "eventDescription": "Come support your local south african rugby team",
+  "eventLogo": "https://bravoevents-assets.s3.eu-west-1.amazonaws.com/profile-pictures/68ff72e5e682bed29e18894c/1762806144447-1ca8460a-6cf4-4fc2-ab53-55e30b4ffae7.jpeg",
+  "city": "Cape Town",
+  "ticketUrl": "https://www.viagogo.com/ww/Sports-Tickets/Rugby/Rugby-Union/SVNS/E-159363663",
+  "adminFee": 500,
+  "servicePrice": 75,
+  "title": "Cape Town Sevens",
   "seatingArrangement": {
     "isSeatedEvent": false,
-    "isOpenAirEvent": true,
-    "isPlotTentsEvent": false,
-    "openAirEventDetails": {
-      "openAirCapacity": 0,
-      "ticketPrice": 0
-    }
+    "isOpenAirEvent": false,
+    "isPlotTentsEvent": false
   },
-  "vendorsStalls": {
-    "stalls": {
-      "food": {
-        "vendor": false,
-        "numberOfStalls": "10",
-        "pricePerStall": "5",
-        "entertainmentRequired": true,
-        "squareMetersAvailable": "100",
-        "setupDate": "2025-11-12",
-        "setupTime": "13:52",
-        "strikeDate": "2025-11-20",
-        "strikeTime": "11:48"
-      },
-      "accessories": {
-        "vendor": false,
-        "numberOfStalls": "15",
-        "pricePerStall": "10",
-        "entertainmentRequired": false,
-        "squareMetersAvailable": 0
-      },
-      "artsAndCrafts": {
-        "vendor": true,
-        "vendorName": "Arts & Crafts Vendor name",
-        "numberOfStalls": 0,
-        "pricePerStall": 0,
-        "entertainmentRequired": true,
-        "squareMetersAvailable": 0
-      },
-      "vape": {
-        "vendor": true,
-        "vendorName": "Vape Vendor Name",
-        "numberOfStalls": 0,
-        "pricePerStall": 0,
-        "entertainmentRequired": true,
-        "squareMetersAvailable": 0
-      }
-    },
-    "catering": {
-      "vendor": true,
-      "vendorName": "Test Vendor name Catering",
-      "items": [
-        {}
-      ]
-    }
-  },
-  "eventVenue": "",
-  "eventTypes": [
-    "Open Air Event"
-  ],
-  "adminFee": 500,
-  "servicePrice": 150,
   "infrastructure": {
     "fencing": {
       "mainCategoryId": "",
@@ -339,6 +288,86 @@
       "campingAdditionalFacilities": ""
     }
   },
+  "vendorsStalls": {
+    "stalls": {
+      "food": {
+        "mainCategoryId": "685513f9aca812e302cd87db",
+        "subCategoryId": "685a89326bb33b415cca58ce",
+        "leafCategoryId": "685a89326bb33b415cca58cf",
+        "vendor": false,
+        "vendorName": "",
+        "numberOfStalls": 0,
+        "pricePerStall": 0,
+        "entertainmentRequired": true,
+        "squareMetersAvailable": 0,
+        "setupDate": "",
+        "setupTime": "",
+        "strikeDate": "",
+        "strikeTime": ""
+      },
+      "accessories": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "numberOfStalls": 0,
+        "pricePerStall": 0,
+        "entertainmentRequired": true,
+        "squareMetersAvailable": 0,
+        "setupDate": "",
+        "setupTime": "",
+        "strikeDate": "",
+        "strikeTime": ""
+      },
+      "artsAndCrafts": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "numberOfStalls": 0,
+        "pricePerStall": 0,
+        "entertainmentRequired": true,
+        "squareMetersAvailable": 0,
+        "setupDate": "",
+        "setupTime": "",
+        "strikeDate": "",
+        "strikeTime": ""
+      },
+      "vape": {
+        "mainCategoryId": "",
+        "subCategoryId": "",
+        "leafCategoryId": "",
+        "vendor": true,
+        "vendorName": "",
+        "numberOfStalls": 0,
+        "pricePerStall": 0,
+        "entertainmentRequired": true,
+        "squareMetersAvailable": 0,
+        "setupDate": "",
+        "setupTime": "",
+        "strikeDate": "",
+        "strikeTime": ""
+      }
+    },
+    "catering": {
+      "mainCategoryId": "",
+      "subCategoryId": "",
+      "vendor": true,
+      "vendorName": "",
+      "items": [
+        {
+          "description": "",
+          "areaToBeCatered": ""
+        }
+      ],
+      "setupDate": "",
+      "setupTime": "",
+      "strikeDate": "",
+      "strikeTime": ""
+    }
+  },
   "brandingPromotionDto": {
     "printingAndBranding": {
       "minCategoryId": "",
@@ -534,17 +563,24 @@
     }
   },
   "staffingSupportDto": {
-    "mainCategoryId": "",
     "staff": {
-      "vendor": true,
-      "vendorName": "",
-      "subCategoryId": "",
+      "vendor": false,
+      "subCategoryId": "685a89326bb33b415cca58e5",
       "staff": [
         {
-          "staffType": "",
-          "amount": 0
+          "staffType": "waiter",
+          "amount": "25"
+        },
+        {
+          "staffType": "cleaning",
+          "amount": "20"
+        },
+        {
+          "staffType": "bar",
+          "amount": "10"
         }
-      ]
+      ],
+      "mainCategoryId": "685525c9aca812e302cd87e3"
     }
   },
   "permissions": {
@@ -585,6 +621,6 @@
       "subCategoryId": ""
     }
   },
-  "returnUrl": "https://bravo-events-fe.vercel.app/create-event/success",
-  "cancelUrl": "https://bravo-events-fe.vercel.app/create-event/failed"
+  "returnUrl": "https://localhost:3000/create-event/success",
+  "cancelUrl": "https://localhost:3000/create-event/failed"
 }

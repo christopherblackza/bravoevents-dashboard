@@ -32,7 +32,7 @@ import { DeleteEventDialogComponent } from '../dialogs/delete-event-dialog/delet
 })
 export class EventManagementComponent implements OnInit, OnDestroy {
   events: Event[] = [];
-  displayedColumns: string[] = ['eventLogo', 'title', 'date', 'startTime', 'endTime', 'isEventVenue', 'requestTickets', 'actions'];
+  displayedColumns: string[] = ['eventLogo', 'title', 'date', 'startTime', 'endTime', 'isEventVenue', 'requestTickets', 'paymentStatus', 'actions'];
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -109,7 +109,8 @@ export class EventManagementComponent implements OnInit, OnDestroy {
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: (response) => {
-              if (response.success) {
+              console.log("Delete event response:", response);
+              if (response.deleted) {
                 this.snackBar.open('Event deleted successfully', 'Close', { duration: 3000 });
                 this.loadEvents();
               } else {

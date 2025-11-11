@@ -6,7 +6,8 @@
     </button>
     <h1 class="page-title">{{ pageTitle }}</h1>
     <span class="spacer"></span>
-    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!eventForm.valid || isLoading" class="save-button">
+     <!-- [disabled]="!eventForm.valid || isLoading"  -->
+    <button mat-raised-button color="primary" (click)="onSubmit()" class="save-button">
       <mat-icon *ngIf="isLoading">hourglass_empty</mat-icon>
       {{ isEdit ? 'Update Event' : 'Create Event' }}
     </button>
@@ -64,23 +65,23 @@
                   </mat-error>
                 </mat-form-field>
               </div>
-
+<!-- 
               <div class="form-row">
                 <mat-form-field appearance="outline" class="half-width">
                   <mat-label>Type of event</mat-label>
                   <mat-select formControlName="typeOfEvent" placeholder="Select Your Event Type">
-                    <mat-option value="Live Music & Performances">Live Music & Performances</mat-option>
-                    <mat-option value="Gaming & eSports">Gaming & eSports</mat-option>
-                    <mat-option value="Culture, Travel & Experiences">Culture, Travel & Experiences</mat-option>
-                    <mat-option value="Tech & Innovation">Tech & Innovation</mat-option>
-                    <mat-option value="Virtual Event">Virtual Event</mat-option>
-                    <mat-option value="Social Event">Social Event</mat-option>
-                    <mat-option value="Hybrid Event">Hybrid Event</mat-option>
-                    <mat-option value="Science">Science</mat-option>
-                    <mat-option value="Sports Event">Sports Event</mat-option>
                     <mat-option value="Corporate Event">Corporate Event</mat-option>
+                    <mat-option value="Culture, Travel & Experiences">Culture, Travel & Experiences</mat-option>
                     <mat-option value="Entertainment Event">Entertainment Event</mat-option>
+                    <mat-option value="Gaming & eSports">Gaming & eSports</mat-option>
+                    <mat-option value="Hybrid Event">Hybrid Event</mat-option>
+                    <mat-option value="Live Music & Performances">Live Music & Performances</mat-option>
+                    <mat-option value="Science">Science</mat-option>
+                    <mat-option value="Social Event">Social Event</mat-option>
+                    <mat-option value="Sports Event">Sports Event</mat-option>
+                    <mat-option value="Tech & Innovation">Tech & Innovation</mat-option>
                     <mat-option value="Travel & Experiences Event">Travel & Experiences Event</mat-option>
+                    <mat-option value="Virtual Event">Virtual Event</mat-option>
                   </mat-select>
                   <mat-error *ngIf="eventForm.get('typeOfEvent')?.hasError('required')">
                     Event type is required
@@ -97,7 +98,7 @@
                     Expected attendance must be at least 1
                   </mat-error>
                 </mat-form-field>
-              </div>
+              </div> -->
 
               <div class="form-row">
                 <mat-form-field appearance="outline" class="full-width">
@@ -182,16 +183,24 @@
                 </mat-error>
               </div>
 
+              <!-- Ticket Link -->
+              <div class="form-row" *ngIf="eventForm.get('requestTickets')?.value === 'no'">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Ticket Link</mat-label>
+                  <input matInput formControlName="ticketLink" placeholder="Enter ticket link">
+                </mat-form-field>
+              </div>
+
               <!-- Type of Event Section -->
-              <div class="form-section">
+              <div class="form-section" *ngIf="eventForm.get('requestTickets')?.value === 'yes'">
                 <h4>Type of Event</h4>
                 <div formGroupName="eventType" class="event-type-section">
                   <div class="event-type-option">
                     <div class="event-type-header">
                       <span>Seated Event</span>
-                      <button type="button" mat-stroked-button class="select-seats-btn" [disabled]="!eventForm.get('eventType.seatedEvent')?.value">
+                      <!-- <button type="button" mat-stroked-button class="select-seats-btn" [disabled]="!eventForm.get('eventType.seatedEvent')?.value">
                         Select Seats*
-                      </button>
+                      </button> -->
                     </div>
                     <mat-checkbox formControlName="seatedEvent"></mat-checkbox>
                   </div>
@@ -199,9 +208,9 @@
                   <div class="event-type-option">
                     <div class="event-type-header">
                       <span>Open Air Event</span>
-                      <button type="button" mat-stroked-button class="select-seats-btn" [disabled]="!eventForm.get('eventType.openAirEvent')?.value">
+                      <!-- <button type="button" mat-stroked-button class="select-seats-btn" [disabled]="!eventForm.get('eventType.openAirEvent')?.value">
                         Select Seats*
-                      </button>
+                      </button> -->
                     </div>
                     <mat-checkbox formControlName="openAirEvent"></mat-checkbox>
                   </div>
@@ -209,9 +218,9 @@
                   <div class="event-type-option">
                     <div class="event-type-header">
                       <span>Plot for tents</span>
-                      <button type="button" mat-stroked-button class="select-seats-btn" [disabled]="!eventForm.get('eventType.plotForTents')?.value">
+                      <!-- <button type="button" mat-stroked-button class="select-seats-btn" [disabled]="!eventForm.get('eventType.plotForTents')?.value">
                         Select Seats*
-                      </button>
+                      </button> -->
                     </div>
                     <mat-checkbox formControlName="plotForTents"></mat-checkbox>
                   </div>
@@ -250,6 +259,47 @@
                       </mat-form-field>
                     </div>
 
+                    <div class="vendor-input" *ngIf="eventForm.get('camping.hasVendor')?.value === 'no'">
+                      <div class="form-row">
+                        <mat-form-field appearance="outline" class="half-width">
+                          <mat-label>Camping Tents</mat-label>
+                          <input matInput type="number" formControlName="campingTents" placeholder="0">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="half-width">
+                          <mat-label>Dimensions</mat-label>
+                          <input matInput formControlName="campingDimensions" placeholder="Enter dimensions">
+                        </mat-form-field>
+                      </div>
+                      <div class="form-row">
+                        <mat-form-field appearance="outline" class="half-width">
+                          <mat-label>Persons per tent</mat-label>
+                          <input matInput type="number" formControlName="personsPerTent" placeholder="0">
+                        </mat-form-field>
+                      </div>
+                      <div class="form-row">
+                        <mat-form-field appearance="outline" class="half-width">
+                          <mat-label>Glamping tents</mat-label>
+                          <input matInput type="number" formControlName="glampingTents" placeholder="0">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="half-width">
+                          <mat-label>Persons per tent</mat-label>
+                          <input matInput type="number" formControlName="glampingPersonsPerTent" placeholder="0">
+                        </mat-form-field>
+                      </div>
+                      <div class="form-row">
+                        <mat-form-field appearance="outline" class="half-width">
+                          <mat-label>Dimensions</mat-label>
+                          <input matInput formControlName="glampingDimensions" placeholder="Enter dimensions">
+                        </mat-form-field>
+                      </div>
+                      <div class="form-row">
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Additional camping equipment or facilities needed</mat-label>
+                          <textarea matInput formControlName="additionalEquipment" placeholder="Describe any additional camping equipment or facilities needed"></textarea>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
                     <div class="action-buttons">
                       <button type="button" mat-raised-button color="primary">Save</button>
                       <button type="button" mat-button>Reset</button>
@@ -280,8 +330,319 @@
                 </mat-expansion-panel-header>
                 <div class="panel-content" formGroupName="vendorsStalls">
                   <div class="vendors-section">
-                    <p>Vendor and stall requirements for your event.</p>
-                    <!-- Vendors content will be added here -->
+                    <h4>1. Stalls</h4>
+                    <!-- Food Stalls -->
+                    <div class="stall-section" formGroupName="foodStalls">
+                      <p>a) Food stalls</p>
+                      <p>Do you have a vendor?</p>
+                      <mat-radio-group formControlName="hasVendor" class="radio-group">
+                        <mat-radio-button value="yes">Yes</mat-radio-button>
+                        <mat-radio-button value="no">No</mat-radio-button>
+                      </mat-radio-group>
+                      <div *ngIf="eventForm.get('vendorsStalls.foodStalls.hasVendor')?.value === 'yes'">
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Name of Vendor</mat-label>
+                          <input matInput formControlName="vendorName" placeholder="Enter name of vendor">
+                        </mat-form-field>
+                      </div>
+                      <div *ngIf="eventForm.get('vendorsStalls.foodStalls.hasVendor')?.value === 'no'">
+                        <div class="form-row">
+                          <mat-form-field appearance="outline" class="half-width">
+                            <mat-label>Amount of food stalls</mat-label>
+                            <input matInput type="number" formControlName="amount" placeholder="0">
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="half-width">
+                            <mat-label>Price per stall</mat-label>
+                            <input matInput type="number" formControlName="pricePerStall" placeholder="0">
+                          </mat-form-field>
+                        </div>
+                        <div class="form-row">
+                          <mat-checkbox formControlName="hasKidsEntertainment">Do you have kids entertainment?</mat-checkbox>
+                        </div>
+                        <div *ngIf="eventForm.get('vendorsStalls.foodStalls.hasKidsEntertainment')?.value">
+                          <div class="form-row">
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Square meters available</mat-label>
+                              <input matInput formControlName="squareMeters" placeholder="Enter square meters">
+                            </mat-form-field>
+                          </div>
+                          <div class="form-row">
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Setup date</mat-label>
+                              <input matInput [matDatepicker]="foodStallsSetupPicker" formControlName="setupDate" placeholder="yyyy/mm/dd">
+                              <mat-datepicker-toggle matSuffix [for]="foodStallsSetupPicker"></mat-datepicker-toggle>
+                              <mat-datepicker #foodStallsSetupPicker></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Setup time</mat-label>
+                              <input matInput type="time" formControlName="setupTime" placeholder="--:--">
+                            </mat-form-field>
+                          </div>
+                          <div class="form-row">
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Strike down date</mat-label>
+                              <input matInput [matDatepicker]="foodStallsStrikeDownPicker" formControlName="strikeDownDate" placeholder="yyyy/mm/dd">
+                              <mat-datepicker-toggle matSuffix [for]="foodStallsStrikeDownPicker"></mat-datepicker-toggle>
+                              <mat-datepicker #foodStallsStrikeDownPicker></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Strike down time</mat-label>
+                              <input matInput type="time" formControlName="strikeDownTime" placeholder="--:--">
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Accessories Stall -->
+                    <div class="stall-section" formGroupName="accessoriesStalls">
+                      <p>b) Accessories Stall</p>
+                      <p>Do you have a vendor?</p>
+                      <mat-radio-group formControlName="hasVendor" class="radio-group">
+                        <mat-radio-button value="yes">Yes</mat-radio-button>
+                        <mat-radio-button value="no">No</mat-radio-button>
+                      </mat-radio-group>
+                      <div *ngIf="eventForm.get('vendorsStalls.accessoriesStalls.hasVendor')?.value === 'yes'">
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Name of Vendor</mat-label>
+                          <input matInput formControlName="vendorName" placeholder="Enter name of vendor">
+                        </mat-form-field>
+                      </div>
+                      <div *ngIf="eventForm.get('vendorsStalls.accessoriesStalls.hasVendor')?.value === 'no'">
+                        <div class="form-row">
+                          <mat-form-field appearance="outline" class="half-width">
+                            <mat-label>Amount of accessory stalls</mat-label>
+                            <input matInput type="number" formControlName="amount" placeholder="0">
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="half-width">
+                            <mat-label>Price per stall</mat-label>
+                            <input matInput type="number" formControlName="pricePerStall" placeholder="0">
+                          </mat-form-field>
+                        </div>
+                        <div class="form-row">
+                          <mat-checkbox formControlName="hasKidsEntertainment">Do you have kids entertainment?</mat-checkbox>
+                        </div>
+                        <div *ngIf="eventForm.get('vendorsStalls.accessoriesStalls.hasKidsEntertainment')?.value">
+                          <div class="form-row">
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Square meters available</mat-label>
+                              <input matInput formControlName="squareMeters" placeholder="Enter square meters">
+                            </mat-form-field>
+                          </div>
+                          <div class="form-row">
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Setup date</mat-label>
+                              <input matInput [matDatepicker]="accessoriesStallsSetupPicker" formControlName="setupDate" placeholder="yyyy/mm/dd">
+                              <mat-datepicker-toggle matSuffix [for]="accessoriesStallsSetupPicker"></mat-datepicker-toggle>
+                              <mat-datepicker #accessoriesStallsSetupPicker></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Setup time</mat-label>
+                              <input matInput type="time" formControlName="setupTime" placeholder="--:--">
+                            </mat-form-field>
+                          </div>
+                          <div class="form-row">
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Strike down date</mat-label>
+                              <input matInput [matDatepicker]="accessoriesStallsStrikeDownPicker" formControlName="strikeDownDate" placeholder="yyyy/mm/dd">
+                              <mat-datepicker-toggle matSuffix [for]="accessoriesStallsStrikeDownPicker"></mat-datepicker-toggle>
+                              <mat-datepicker #accessoriesStallsStrikeDownPicker></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Strike down time</mat-label>
+                              <input matInput type="time" formControlName="strikeDownTime" placeholder="--:--">
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Arts and Crafts -->
+                    <div class="stall-section" formGroupName="artsAndCraftsStalls">
+                      <p>c) Arts and Crafts</p>
+                      <p>Do you have a vendor?</p>
+                      <mat-radio-group formControlName="hasVendor" class="radio-group">
+                        <mat-radio-button value="yes">Yes</mat-radio-button>
+                        <mat-radio-button value="no">No</mat-radio-button>
+                      </mat-radio-group>
+                      <div *ngIf="eventForm.get('vendorsStalls.artsAndCraftsStalls.hasVendor')?.value === 'yes'">
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Name of Vendor</mat-label>
+                          <input matInput formControlName="vendorName" placeholder="Enter name of vendor">
+                        </mat-form-field>
+                      </div>
+                      <div *ngIf="eventForm.get('vendorsStalls.artsAndCraftsStalls.hasVendor')?.value === 'no'">
+                        <div class="form-row">
+                          <mat-form-field appearance="outline" class="half-width">
+                            <mat-label>Amount of arts and crafts stalls</mat-label>
+                            <input matInput type="number" formControlName="amount" placeholder="0">
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="half-width">
+                            <mat-label>Price per stall</mat-label>
+                            <input matInput type="number" formControlName="pricePerStall" placeholder="0">
+                          </mat-form-field>
+                        </div>
+                        <div class="form-row">
+                          <mat-checkbox formControlName="hasKidsEntertainment">Do you have kids entertainment?</mat-checkbox>
+                        </div>
+                        <div *ngIf="eventForm.get('vendorsStalls.artsAndCraftsStalls.hasKidsEntertainment')?.value">
+                          <div class="form-row">
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Square meters available</mat-label>
+                              <input matInput formControlName="squareMeters" placeholder="Enter square meters">
+                            </mat-form-field>
+                          </div>
+                          <div class="form-row">
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Setup date</mat-label>
+                              <input matInput [matDatepicker]="artsAndCraftsStallsSetupPicker" formControlName="setupDate" placeholder="yyyy/mm/dd">
+                              <mat-datepicker-toggle matSuffix [for]="artsAndCraftsStallsSetupPicker"></mat-datepicker-toggle>
+                              <mat-datepicker #artsAndCraftsStallsSetupPicker></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Setup time</mat-label>
+                              <input matInput type="time" formControlName="setupTime" placeholder="--:--">
+                            </mat-form-field>
+                          </div>
+                          <div class="form-row">
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Strike down date</mat-label>
+                              <input matInput [matDatepicker]="artsAndCraftsStallsStrikeDownPicker" formControlName="strikeDownDate" placeholder="yyyy/mm/dd">
+                              <mat-datepicker-toggle matSuffix [for]="artsAndCraftsStallsStrikeDownPicker"></mat-datepicker-toggle>
+                              <mat-datepicker #artsAndCraftsStallsStrikeDownPicker></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Strike down time</mat-label>
+                              <input matInput type="time" formControlName="strikeDownTime" placeholder="--:--">
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Vape stalls -->
+                    <div class="stall-section" formGroupName="vapeStalls">
+                      <p>d) Vape stalls</p>
+                      <p>Do you have a vendor?</p>
+                      <mat-radio-group formControlName="hasVendor" class="radio-group">
+                        <mat-radio-button value="yes">Yes</mat-radio-button>
+                        <mat-radio-button value="no">No</mat-radio-button>
+                      </mat-radio-group>
+                      <div *ngIf="eventForm.get('vendorsStalls.vapeStalls.hasVendor')?.value === 'yes'">
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Name of Vendor</mat-label>
+                          <input matInput formControlName="vendorName" placeholder="Enter name of vendor">
+                        </mat-form-field>
+                      </div>
+                      <div *ngIf="eventForm.get('vendorsStalls.vapeStalls.hasVendor')?.value === 'no'">
+                        <div class="form-row">
+                          <mat-form-field appearance="outline" class="half-width">
+                            <mat-label>Amount of vape stalls</mat-label>
+                            <input matInput type="number" formControlName="amount" placeholder="0">
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="half-width">
+                            <mat-label>Price per stall</mat-label>
+                            <input matInput type="number" formControlName="pricePerStall" placeholder="0">
+                          </mat-form-field>
+                        </div>
+                        <div class="form-row">
+                          <mat-checkbox formControlName="hasKidsEntertainment">Do you have kids entertainment?</mat-checkbox>
+                        </div>
+                        <div *ngIf="eventForm.get('vendorsStalls.vapeStalls.hasKidsEntertainment')?.value">
+                          <div class="form-row">
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Square meters available</mat-label>
+                              <input matInput formControlName="squareMeters" placeholder="Enter square meters">
+                            </mat-form-field>
+                          </div>
+                          <div class="form-row">
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Setup date</mat-label>
+                              <input matInput [matDatepicker]="vapeStallsSetupPicker" formControlName="setupDate" placeholder="yyyy/mm/dd">
+                              <mat-datepicker-toggle matSuffix [for]="vapeStallsSetupPicker"></mat-datepicker-toggle>
+                              <mat-datepicker #vapeStallsSetupPicker></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Setup time</mat-label>
+                              <input matInput type="time" formControlName="setupTime" placeholder="--:--">
+                            </mat-form-field>
+                          </div>
+                          <div class="form-row">
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Strike down date</mat-label>
+                              <input matInput [matDatepicker]="vapeStallsStrikeDownPicker" formControlName="strikeDownDate" placeholder="yyyy/mm/dd">
+                              <mat-datepicker-toggle matSuffix [for]="vapeStallsStrikeDownPicker"></mat-datepicker-toggle>
+                              <mat-datepicker #vapeStallsStrikeDownPicker></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Strike down time</mat-label>
+                              <input matInput type="time" formControlName="strikeDownTime" placeholder="--:--">
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Catering -->
+                    <h4>2. Catering</h4>
+                    <div class="catering-section" formGroupName="catering">
+                      <p>Do you have a vendor?</p>
+                      <mat-radio-group formControlName="hasVendor" class="radio-group">
+                        <mat-radio-button value="yes">Yes</mat-radio-button>
+                        <mat-radio-button value="no">No</mat-radio-button>
+                      </mat-radio-group>
+                      <div *ngIf="eventForm.get('vendorsStalls.catering.hasVendor')?.value === 'yes'">
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Name of Vendor</mat-label>
+                          <input matInput formControlName="vendorName" placeholder="Enter name of vendor">
+                        </mat-form-field>
+                      </div>
+                      <div *ngIf="eventForm.get('vendorsStalls.catering.hasVendor')?.value === 'no'">
+                        <div formArrayName="items">
+                          <div *ngFor="let item of cateringItems.controls; let i = index" [formGroupName]="i" class="form-row">
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Description of food needed</mat-label>
+                              <input matInput formControlName="description" placeholder="Enter description">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="half-width">
+                              <mat-label>Area to be catered for</mat-label>
+                              <input matInput formControlName="area" placeholder="Enter area">
+                            </mat-form-field>
+                            <button mat-icon-button (click)="removeCateringItem(i)" class="remove-btn">
+                              <mat-icon>delete</mat-icon>
+                            </button>
+                          </div>
+                        </div>
+                        <button type="button" mat-stroked-button (click)="addCateringItem()" class="add-another-btn">
+                          <mat-icon>add</mat-icon>
+                          Add Another
+                        </button>
+                        <div class="form-row">
+                          <mat-form-field appearance="outline" class="half-width">
+                            <mat-label>Setup date</mat-label>
+                            <input matInput [matDatepicker]="cateringSetupPicker" formControlName="setupDate" placeholder="yyyy/mm/dd">
+                            <mat-datepicker-toggle matSuffix [for]="cateringSetupPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #cateringSetupPicker></mat-datepicker>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="half-width">
+                            <mat-label>Setup time</mat-label>
+                            <input matInput type="time" formControlName="setupTime" placeholder="--:--">
+                          </mat-form-field>
+                        </div>
+                        <div class="form-row">
+                          <mat-form-field appearance="outline" class="half-width">
+                            <mat-label>Strike down date</mat-label>
+                            <input matInput [matDatepicker]="cateringStrikeDownPicker" formControlName="strikeDownDate" placeholder="yyyy/mm/dd">
+                            <mat-datepicker-toggle matSuffix [for]="cateringStrikeDownPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #cateringStrikeDownPicker></mat-datepicker>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="half-width">
+                            <mat-label>Strike down time</mat-label>
+                            <input matInput type="time" formControlName="strikeDownTime" placeholder="--:--">
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </mat-expansion-panel>
@@ -296,6 +657,63 @@
                   <div class="safety-section">
                     <p>Safety and emergency requirements for your event.</p>
                     <!-- Safety content will be added here -->
+                  </div>
+                </div>
+              </mat-expansion-panel>
+
+              <!-- Staffing & Support Section -->
+              <mat-expansion-panel class="optional-panel">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Staffing & Support</mat-panel-title>
+                  <mat-icon>expand_more</mat-icon>
+                </mat-expansion-panel-header>
+                <div class="panel-content" formGroupName="staffingSupport">
+                  <div class="staffing-section">
+                    <h4>1. Staffing</h4>
+                    <p>Do you have a vendor?</p>
+                    <mat-radio-group formControlName="hasVendor" class="radio-group">
+                      <mat-radio-button value="yes">Yes</mat-radio-button>
+                      <mat-radio-button value="no">No</mat-radio-button>
+                    </mat-radio-group>
+
+                    <div class="vendor-input" *ngIf="eventForm.get('staffingSupport.hasVendor')?.value === 'yes'">
+                      <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Name of Vendor</mat-label>
+                        <input matInput formControlName="vendorName" placeholder="Enter name of vendor">
+                      </mat-form-field>
+                    </div>
+
+                    <div *ngIf="eventForm.get('staffingSupport.hasVendor')?.value === 'no'">
+                      <div formArrayName="members">
+                        <div *ngFor="let member of staffMembers.controls; let i = index" [formGroupName]="i" class="form-row">
+                          <mat-form-field appearance="outline" class="half-width">
+                            <mat-label>What type of staff</mat-label>
+                            <mat-select formControlName="type">
+                              <mat-option value="Waiter">Waiter</mat-option>
+                              <mat-option value="Bar">Bar</mat-option>
+                              <mat-option value="Cleaning">Cleaning</mat-option>
+                              <mat-option value="Other">Other</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="outline" class="half-width">
+                            <mat-label>Amount</mat-label>
+                            <input matInput type="number" formControlName="amount" placeholder="0">
+                          </mat-form-field>
+                          <button mat-icon-button (click)="removeStaffMember(i)" class="remove-btn">
+                            <mat-icon>delete</mat-icon>
+                          </button>
+                        </div>
+                      </div>
+                      <button type="button" mat-stroked-button (click)="addStaffMember()" class="add-another-btn">
+                        <mat-icon>add</mat-icon>
+                        Add Another
+                      </button>
+                    </div>
+
+                    <div class="action-buttons">
+                      <button type="button" mat-raised-button color="primary">Save</button>
+                      <!-- <button type="button" mat-button>Reset</button> -->
+                    </div>
                   </div>
                 </div>
               </mat-expansion-panel>
